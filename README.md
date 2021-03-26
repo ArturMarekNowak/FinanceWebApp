@@ -41,7 +41,7 @@ There will be more here, stay tuned!
 Project is: _in progress_, we are working onthe basics
 
 ## Inspiration
-Selfwork?
+Selfdevelopment
 
 ## Contact
 
