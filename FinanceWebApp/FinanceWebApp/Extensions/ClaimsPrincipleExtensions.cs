@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace MainPage.Extensions
+namespace FinanceWebApp.Extensions
 {
     public static class ClaimsPrincipleExtensions
     {

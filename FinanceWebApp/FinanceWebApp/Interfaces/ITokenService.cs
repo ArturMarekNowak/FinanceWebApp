@@ -1,6 +1,6 @@
-﻿using MainPage.Entities;
+﻿using FinanceWebApp.Entities;
 
-namespace MainPage.Interfaces
+namespace FinanceWebApp.Interfaces
 {
     public interface ITokenService
     {

@@ -1,11 +1,11 @@
-﻿using MainPage.Extensions;
-using MainPage.Interfaces;
+﻿using FinanceWebApp.Extensions;
+using FinanceWebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace MainPage.Helpers
+namespace FinanceWebApp.Helpers
 {
     public class LogUserActivity : IAsyncActionFilter
     {

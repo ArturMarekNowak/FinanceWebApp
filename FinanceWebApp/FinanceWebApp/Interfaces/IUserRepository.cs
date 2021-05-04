@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MainPage.Interfaces
+namespace FinanceWebApp.Interfaces
 {
     public interface IUserRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace MainPage.Interfaces
+﻿namespace FinanceWebApp.Interfaces
 {
     public class AppUser
     {

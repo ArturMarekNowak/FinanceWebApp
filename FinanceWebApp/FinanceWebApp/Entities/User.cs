@@ -1,4 +1,4 @@
-﻿namespace MainPage.Entities
+﻿namespace FinanceWebApp.Entities
 {
     public class User
     {

@@ -1,11 +1,11 @@
-﻿using MainPage.Entities;
+﻿using FinanceWebApp.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MainPage.Data
+namespace FinanceWebApp.Data
 {
     public class DataContext : DbContext
     {

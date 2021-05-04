@@ -1,7 +1,7 @@
-﻿using MainPage.Helpers;
+﻿using FinanceWebApp.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MainPage.Controllers
+namespace FinanceWebApp.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]

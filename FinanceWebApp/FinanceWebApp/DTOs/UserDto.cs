@@ -1,4 +1,4 @@
-﻿namespace MainPage.DTOs
+﻿namespace FinanceWebApp.DTOs
 {
     public class UserDto
     {

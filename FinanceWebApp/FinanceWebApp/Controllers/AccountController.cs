@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using MainPage.Data;
-using MainPage.DTOs;
-using MainPage.Entities;
-using MainPage.Interfaces;
+using FinanceWebApp.Data;
+using FinanceWebApp.DTOs;
+using FinanceWebApp.Entities;
+using FinanceWebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainPage.Controllers
+namespace FinanceWebApp.Controllers
 {
     public class AccountController : BaseApiController
     {
