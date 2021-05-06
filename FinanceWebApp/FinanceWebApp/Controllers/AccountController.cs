@@ -46,8 +46,7 @@ namespace FinanceWebApp.Controllers
 
         private async Task<bool> UserExists(string username)
         {
-            var a = await SqliteDataAccess.LoadDataAsync<User>("");
-            return a.Count() != 0;
+            return await SqliteDataAccess.GetUserAsync(username) != null;
         }
     }
 }
