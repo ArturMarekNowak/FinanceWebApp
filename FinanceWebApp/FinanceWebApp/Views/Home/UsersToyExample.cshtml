@@ -1,0 +1,30 @@
+﻿@model IEnumerable<FinanceWebApp.Models.AppUser>
+
+@{
+    ViewData["Title"] = "UsersToyExample";
+}
+
+<div class="text-center">
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Salt</th>
+            <th>Password</th>
+        </tr>
+        @foreach (var d in Model)
+        {
+    <tr>
+        <td>@d.Id</td>
+        <td>@d.Email</td>
+        <td>@d.FirstName</td>
+        <td>@d.LastName</td>
+        <td>@d.SaltHash</td>
+        <td>@d.PasswordHash</td>
+    </tr>
+
+        }
+    </table>
+</div>
