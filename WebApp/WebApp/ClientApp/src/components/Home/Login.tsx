@@ -7,7 +7,7 @@ const Login = () => (
     <div className="col-md-4">
       <section>
         <form id="account" method="post">
-          <h3>Use a local account to log in.</h3>
+          <h2>Use a local account to log in.</h2>
           <hr />
           <div asp-validation-summary="All" className="text-danger"></div>
           <div className="form-group">
