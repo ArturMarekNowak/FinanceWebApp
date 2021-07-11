@@ -5,6 +5,16 @@ namespace WebApp.Models
 {
     public class AppUser
     {
+        public AppUser(string firstName, string email, int userId, string passwordHash, string lastName, string salt)
+        {
+            FirstName = firstName;
+            Email = email;
+            UserId = userId;
+            PasswordHash = passwordHash;
+            LastName = lastName;
+            Salt = salt;
+        }
+
         public int UserId { get; set; }
 
         public string Email { get; set; }

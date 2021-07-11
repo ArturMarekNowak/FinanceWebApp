@@ -9,10 +9,21 @@ namespace WebApp.Services
 {
     public class UserService : IUserService
     {
-        public ActionResult<AppUser> GetAllUsers()
+        public List<AppUser> GetAllUsers()
         {
             using var db = new AppDatabaseContext();
-            return db.Users.First(u => u.UserId == 2);
+            {
+                return db.Users.ToList();
+            }
+        }
+
+        public AppUser? GetUser(int userId)
+        {
+            using var db = new AppDatabaseContext();
+            {
+                var user = db.Users.FirstOrDefault(u => u.UserId == userId);
+                return user;
+            }
         }
     }
 }
