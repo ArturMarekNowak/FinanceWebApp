@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models
 {
-    public class User
+    public class AppUser
     {
         public int UserId { get; set; }
 
@@ -16,9 +17,10 @@ namespace WebApp.Models
         
         public string Salt { get; set; }
         
-        public DateTime LastActive { get; set; } = DateTime.Now;
-
         public DateTime CreatedAccount { get; set; } = DateTime.Now;
+
+        public DateTime LastActive { get; set; } = DateTime.Now;
+        
 
     }
 }
