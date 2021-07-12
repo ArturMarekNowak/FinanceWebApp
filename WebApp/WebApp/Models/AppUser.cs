@@ -1,18 +1,44 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using WebApp.Database;
 
 namespace WebApp.Models
 {
     public class AppUser
     {
-        public AppUser(string firstName, string email, int userId, string passwordHash, string lastName, string salt)
+        public AppUser()
         {
-            FirstName = firstName;
+            
+        }
+
+
+        public AppUser(string email, string firstName, string lastName, string passwordPlainText)
+        {
+            Random random = new();
+
+            using (var db = new AppDatabaseContext())
+            {
+                try
+                {
+                    UserId = db.Users.OrderByDescending(u => u.UserId).First().UserId + 1;
+                }
+                catch
+                {
+                    UserId = 1;
+                }
+            }
+
             Email = email;
-            UserId = userId;
-            PasswordHash = passwordHash;
+            FirstName = firstName;
             LastName = lastName;
-            Salt = salt;
+            
+            Salt = new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 8)
+                .Select(s => s[random.Next(s.Length)]).ToArray()); 
+            
+            PasswordHash = Helpers.Hashing.GetSha512Hash(Salt + passwordPlainText);
+            
+            CreatedAccount = DateTime.Now;
+            LastActive = DateTime.Now;
         }
 
         public int UserId { get; set; }
