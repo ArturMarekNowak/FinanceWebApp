@@ -1,5 +1,5 @@
 # Project Name
-An ambitious, fastly developing project made by AGH students during participation in BIT college circle
+The idea of this is to make an application with presents stock market informations to it's users.
 
 ## Table of contents
 * [General info](#general-info)
@@ -18,7 +18,15 @@ There will be more here, stay tuned!
 There will be more here, stay tuned!
 
 ## Technologies
-There will be more here, stay tuned!
+* .NET 5.0 version 5.0.5
+* Entity Framework Core version 6.0.0
+* Sqlite version 6.0.0
+* REST API 
+* React Typescript
+
+* Visual Studio Code
+* Visual Studio 
+* JetBrains Rider
 
 
 ## Setup
@@ -38,7 +46,7 @@ There will be more here, stay tuned!
 
 
 ## Status
-Project is: _in progress_, we are working onthe basics
+Project is: _in progress_, we are working on the registration
 
 ## Inspiration
 Selfdevelopment
