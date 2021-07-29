@@ -64,8 +64,8 @@ namespace WebApp.Services
             using var db = new AppDatabaseContext();
             {
                 db.Users.First(u => u.UserId == userId).Email = appUserDto.Email;
-                db.Users.First(u => u.UserId == userId).FirstName = appUserDto.Email;
-                db.Users.First(u => u.UserId == userId).LastName = appUserDto.Email;
+                db.Users.First(u => u.UserId == userId).FirstName = appUserDto.FirstName;
+                db.Users.First(u => u.UserId == userId).LastName = appUserDto.LastName;
                 db.Users.First(u => u.UserId == userId).PasswordHash = Helpers.Hashing.GetSha512Hash(db.Users.First(u => u.UserId == userId).Salt + appUserDto.PasswordPlainText);
                 db.SaveChanges();
             }
