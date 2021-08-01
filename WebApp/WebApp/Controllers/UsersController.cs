@@ -18,15 +18,13 @@ namespace WebApp.Controllers
             _userController = userController;
         }
 
-        // GET all action
-        [HttpGet]
+        [HttpGet("All")]
         public ActionResult<List<AppUser>> GetAllUsers()
         {
              return _userController.GetAllUsers();
         }
         
-        // GET by Id action
-        [HttpGet("{userId:int}")]
+        [HttpGet]
         public ActionResult<AppUser?> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
@@ -36,7 +34,6 @@ namespace WebApp.Controllers
             return user;
         }
 
-        // POST action
         [HttpPost]
         public IActionResult AddUser(AppUserDto appUserDto)
         {
@@ -50,8 +47,7 @@ namespace WebApp.Controllers
             return NoContent();
         }
 
-        // DELETE action
-        [HttpDelete("{userId:int}")]
+        [HttpDelete]
         public IActionResult DeleteUser(int userId)
         {
             var rc = _userController.DeleteUser(userId);
@@ -64,7 +60,7 @@ namespace WebApp.Controllers
             return NoContent();
         }
 
-        [HttpPut("{userId:int}")]
+        [HttpPut]
         public IActionResult UpdateUser(int userId, AppUserDto appUserDto)
         {
             var rc = _userController.UpdateUser(userId, appUserDto);
