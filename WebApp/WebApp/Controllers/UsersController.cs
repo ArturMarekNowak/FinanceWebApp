@@ -28,8 +28,6 @@ namespace WebApp.Controllers
         public ActionResult<AppUser?> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
-            if (user is null)
-                return BadRequest();
 
             return user;
         }
@@ -37,12 +35,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult AddUser(AppUserDto appUserDto)
         {
-            var rc = _userController.AddUser(appUserDto);
-
-            if (rc is null)
-            {
-                return BadRequest();
-            }
+           _userController.AddUser(appUserDto);
 
             return NoContent();
         }
@@ -50,27 +43,17 @@ namespace WebApp.Controllers
         [HttpDelete]
         public IActionResult DeleteUser(int userId)
         {
-            var rc = _userController.DeleteUser(userId);
-
-            if (rc is null)
-            {
-                return BadRequest();
-            }
-
+            _userController.DeleteUser(userId);
+            
             return NoContent();
         }
 
         [HttpPut]
         public IActionResult UpdateUser(int userId, AppUserDto appUserDto)
         {
-            var rc = _userController.UpdateUser(userId, appUserDto);
+            var user = _userController.UpdateUser(userId, appUserDto);
 
-            if (rc is null)
-            {
-                return BadRequest();
-            }
-
-            return NoContent();
+            return Ok(user);
         }
         
     }

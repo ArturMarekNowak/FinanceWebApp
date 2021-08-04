@@ -4,6 +4,7 @@ using System.Linq;
 using WebApp.Database;
 using WebApp.Models;
 using WebApp.Dto;
+using WebApp.Exceptions;
 
 namespace WebApp.Services
 {
@@ -22,44 +23,41 @@ namespace WebApp.Services
             using var db = new AppDatabaseContext();
             {
                 var user = db.Users.FirstOrDefault(u => u.UserId == userId);
+
+                if (user is null)
+                    throw new BadRequestException($"User with Id {userId} does not exist");
+                
                 return user;
             }
         }
 
-        public int? AddUser(AppUserDto appUserDto)
+        public void AddUser(AppUserDto appUserDto)
         {
             using var db = new AppDatabaseContext();
             {
                 db.Add(new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName, appUserDto.PasswordPlainText));
                 db.SaveChanges();
             }
-            return 0;
+            
         }
         
-        public int? DeleteUser(int userId)
+        public void DeleteUser(int userId)
         {
             using var db = new AppDatabaseContext();
             {
                 var user = GetUser(userId);
-                if (user is not null)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                    return 0;
-                }
-                else
-                {
-                    return null;
-                }
+                if (user is null) throw new BadRequestException($"User with Id {userId} does not exist");
+                db.Remove(user);
+                db.SaveChanges();
             }
         }
 
-        public int? UpdateUser(int userId, AppUserDto appUserDto)
+        public AppUser UpdateUser(int userId, AppUserDto appUserDto)
         {
-            var client = GetUser(userId);
+            var user = GetUser(userId);
 
-            if (client is null)
-                return null;
+            if (user is null)
+                throw new BadRequestException($"User with Id {userId} does not exist");
             
             using var db = new AppDatabaseContext();
             {
@@ -69,7 +67,8 @@ namespace WebApp.Services
                 db.Users.First(u => u.UserId == userId).PasswordHash = Helpers.Hashing.GetSha512Hash(db.Users.First(u => u.UserId == userId).Salt + appUserDto.PasswordPlainText);
                 db.SaveChanges();
             }
-            return 0;
+
+            return user;
         }
     }
 }
