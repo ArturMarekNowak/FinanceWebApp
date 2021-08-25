@@ -6,6 +6,11 @@ namespace WebApp.Models
 {
     public sealed class AppUser
     {
+        public AppUser()
+        {
+            
+        }
+        
         public AppUser(string email, string firstName, string lastName, string passwordPlainText)
         {
             Random random = new();
