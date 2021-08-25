@@ -12,7 +12,7 @@ namespace WebApp.Services
         
         AppUser? GetUser(int userId);
 
-        void AddUser(AppUserDto appUserDto);
+        long AddUser(AppUserDto appUserDto);
         
         void DeleteUser(int userId);
 

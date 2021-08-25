@@ -9,7 +9,7 @@ using WebApp.Services;
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userController;
@@ -35,9 +35,9 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult AddUser(AppUserDto appUserDto)
         {
-           _userController.AddUser(appUserDto);
+           var userId = _userController.AddUser(appUserDto);
 
-            return NoContent();
+            return Ok(userId);
         }
 
         [HttpDelete]
@@ -45,7 +45,7 @@ namespace WebApp.Controllers
         {
             _userController.DeleteUser(userId);
             
-            return NoContent();
+            return Ok();
         }
 
         [HttpPut]

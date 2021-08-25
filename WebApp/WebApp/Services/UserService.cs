@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Database;
 using WebApp.Models;
 using WebApp.Dto;
@@ -32,10 +33,14 @@ namespace WebApp.Services
             return user;
         }
 
-        public void AddUser(AppUserDto appUserDto)
+        public long AddUser(AppUserDto appUserDto)
         {
-            _context.Add(new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName, appUserDto.PasswordPlainText));
+            var newUser = new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName,
+                appUserDto.PasswordPlainText);
+            _context.Add(newUser);
             _context.SaveChanges();
+
+            return newUser.UserId;
         }
         
         public void DeleteUser(int userId)
