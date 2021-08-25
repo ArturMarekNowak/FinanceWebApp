@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebApp
 {
-    public class Program
+    public sealed class Program
     {
         public static void Main(string[] args)
         {

@@ -2,7 +2,7 @@ using System;
 
 namespace WebApp
 {
-    public class WeatherForecast
+    public sealed class WeatherForecast
     {
         public DateTime Date { get; set; }
 

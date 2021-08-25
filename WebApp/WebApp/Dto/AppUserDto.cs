@@ -2,7 +2,7 @@
 
 namespace WebApp.Dto
 {
-    public class AppUserDto
+    public sealed class AppUserDto
     {
         public string Email { get; set; } = string.Empty;
 

@@ -9,7 +9,7 @@ using WebApp.Exceptions;
 
 namespace WebApp.Services
 {
-    public class UserService : IUserService
+    public sealed class UserService : IUserService
     {
         public AppDatabaseContext _context;
         

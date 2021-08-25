@@ -7,7 +7,7 @@ namespace WebApp.Controllers
 {
     
     [ApiController, ApiExplorerSettings(IgnoreApi = true)]
-    public class ErrorController : ControllerBase
+    public sealed class ErrorController : ControllerBase
     {
         [Route("error-local-development")]
         public IActionResult ErrorLocalDevelopment(

@@ -17,7 +17,7 @@ using WebApp.Services;
 
 namespace WebApp
 {
-    public class Startup
+    public sealed class Startup
     {
         private readonly IWebHostEnvironment _env;
         

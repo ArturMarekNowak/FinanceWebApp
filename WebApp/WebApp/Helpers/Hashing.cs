@@ -3,7 +3,7 @@ using System.Text;
 
 namespace WebApp.Helpers
 {
-    public class Hashing
+    public sealed class Hashing
     {
         public static string GetSha512Hash(string plainText)
         {
