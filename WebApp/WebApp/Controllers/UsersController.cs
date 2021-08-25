@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using WebApp.Dto;
 using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userController;
@@ -16,28 +18,43 @@ namespace WebApp.Controllers
             _userController = userController;
         }
 
-        // GET all action
-        [HttpGet]
+        [HttpGet("All")]
         public ActionResult<List<AppUser>> GetAllUsers()
         {
              return _userController.GetAllUsers();
         }
         
-        // GET by Id action
-        [HttpGet("{userId:int}")]
+        [HttpGet]
         public ActionResult<AppUser?> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
-            if (user is null)
-                return NotFound();
 
             return user;
         }
 
-        // POST action
+        [HttpPost]
+        public IActionResult AddUser(AppUserDto appUserDto)
+        {
+           var userId = _userController.AddUser(appUserDto);
 
-        // PUT action
+            return Ok(userId);
+        }
 
-        // DELETE action
+        [HttpDelete]
+        public IActionResult DeleteUser(int userId)
+        {
+            _userController.DeleteUser(userId);
+            
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult UpdateUser(int userId, AppUserDto appUserDto)
+        {
+            var user = _userController.UpdateUser(userId, appUserDto);
+
+            return Ok(user);
+        }
+        
     }
 }
