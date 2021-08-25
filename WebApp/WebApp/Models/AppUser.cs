@@ -16,18 +16,6 @@ namespace WebApp.Models
         {
             Random random = new();
 
-            using (var db = new AppDatabaseContext())
-            {
-                try
-                {
-                    UserId = db.Users.OrderByDescending(u => u.UserId).First().UserId + 1;
-                }
-                catch
-                {
-                    UserId = 1;
-                }
-            }
-
             Email = email;
             FirstName = firstName;
             LastName = lastName;
