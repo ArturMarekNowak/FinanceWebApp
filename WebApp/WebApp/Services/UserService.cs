@@ -10,46 +10,40 @@ namespace WebApp.Services
 {
     public class UserService : IUserService
     {
+        public AppDatabaseContext _context;
+        
+        public UserService(AppDatabaseContext context)
+        {
+            _context = context;
+        }
+        
         public List<AppUser> GetAllUsers()
         {
-            using var db = new AppDatabaseContext();
-            {
-                return db.Users.ToList();
-            }
+            return _context.Users.ToList();
         }
 
         public AppUser? GetUser(int userId)
         {
-            using var db = new AppDatabaseContext();
-            {
-                var user = db.Users.FirstOrDefault(u => u.UserId == userId);
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
 
-                if (user is null)
-                    throw new BadRequestException($"User with Id {userId} does not exist");
+            if (user is null)
+                throw new BadRequestException($"User with Id {userId} does not exist");
                 
-                return user;
-            }
+            return user;
         }
 
         public void AddUser(AppUserDto appUserDto)
         {
-            using var db = new AppDatabaseContext();
-            {
-                db.Add(new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName, appUserDto.PasswordPlainText));
-                db.SaveChanges();
-            }
-            
+            _context.Add(new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName, appUserDto.PasswordPlainText));
+            _context.SaveChanges();
         }
         
         public void DeleteUser(int userId)
         {
-            using var db = new AppDatabaseContext();
-            {
-                var user = GetUser(userId);
-                if (user is null) throw new BadRequestException($"User with Id {userId} does not exist");
-                db.Remove(user);
-                db.SaveChanges();
-            }
+            var user = GetUser(userId);
+            if (user is null) throw new BadRequestException($"User with Id {userId} does not exist");
+            _context.Remove(user);
+            _context.SaveChanges();
         }
 
         public AppUser UpdateUser(int userId, AppUserDto appUserDto)
@@ -59,15 +53,12 @@ namespace WebApp.Services
             if (user is null)
                 throw new BadRequestException($"User with Id {userId} does not exist");
             
-            using var db = new AppDatabaseContext();
-            {
-                db.Users.First(u => u.UserId == userId).Email = appUserDto.Email;
-                db.Users.First(u => u.UserId == userId).FirstName = appUserDto.FirstName;
-                db.Users.First(u => u.UserId == userId).LastName = appUserDto.LastName;
-                db.Users.First(u => u.UserId == userId).PasswordHash = Helpers.Hashing.GetSha512Hash(db.Users.First(u => u.UserId == userId).Salt + appUserDto.PasswordPlainText);
-                db.SaveChanges();
-            }
-
+            _context.Users.First(u => u.UserId == userId).Email = appUserDto.Email;
+            _context.Users.First(u => u.UserId == userId).FirstName = appUserDto.FirstName;
+            _context.Users.First(u => u.UserId == userId).LastName = appUserDto.LastName;
+            _context.Users.First(u => u.UserId == userId).PasswordHash = Helpers.Hashing.GetSha512Hash(_context.Users.First(u => u.UserId == userId).Salt + appUserDto.PasswordPlainText);
+            _context.SaveChanges();
+            
             return user;
         }
     }

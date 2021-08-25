@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
+using WebApp.Database;
 using WebApp.Exceptions;
 using WebApp.Services;
 
@@ -43,7 +43,8 @@ namespace WebApp
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddSingleton<IUserService, UserService>();
+            services.AddDbContext<AppDatabaseContext>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddProblemDetails (options =>
             {
