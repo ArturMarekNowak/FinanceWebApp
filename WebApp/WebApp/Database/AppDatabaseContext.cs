@@ -34,25 +34,9 @@ namespace WebApp.Database
             modelBuilder.Entity<AppUser>(entity =>
             {
                 entity.ToTable("User");
-
-                entity.HasKey(e => e.UserId);
                 
                 entity.HasIndex(e => e.Email, "IX_User_Email")
                     .IsUnique();
-
-                entity.Property(e => e.Email).IsRequired();
-
-                entity.Property(e => e.FirstName).IsRequired();
-
-                entity.Property(e => e.LastName).IsRequired();
-
-                entity.Property(e => e.PasswordHash).IsRequired();
-
-                entity.Property(e => e.Salt).IsRequired();
-                
-                entity.Property(e => e.CreatedAccount).IsRequired();
-
-                entity.Property(e => e.LastActive).IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

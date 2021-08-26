@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Database;
 using WebApp.Models;
@@ -18,42 +19,42 @@ namespace WebApp.Services
             _context = context;
         }
         
-        public List<AppUser> GetAllUsers()
+        public Task<List<AppUser>> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return Task.FromResult(_context.Users.ToList());
         }
 
-        public AppUser? GetUser(int userId)
+        public async Task<AppUser> GetUser(int userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
 
             if (user is null)
                 throw new BadRequestException($"User with Id {userId} does not exist");
                 
-            return user;
+            return await Task.FromResult(user);
         }
 
-        public long AddUser(AppUserDto appUserDto)
+        public async Task<long> AddUser(AppUserDto appUserDto)
         {
             var newUser = new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName,
                 appUserDto.PasswordPlainText);
             _context.Add(newUser);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return newUser.UserId;
+            return await Task.FromResult(newUser.UserId);
         }
         
-        public void DeleteUser(int userId)
+        public async Task DeleteUser(int userId)
         {
-            var user = GetUser(userId);
+            var user = await GetUser(userId);
             if (user is null) throw new BadRequestException($"User with Id {userId} does not exist");
             _context.Remove(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public AppUser UpdateUser(int userId, AppUserDto appUserDto)
+        public async Task<AppUser> UpdateUser(int userId, AppUserDto appUserDto)
         {
-            var user = GetUser(userId);
+            var user = await GetUser(userId);
 
             if (user is null)
                 throw new BadRequestException($"User with Id {userId} does not exist");
@@ -62,9 +63,9 @@ namespace WebApp.Services
             _context.Users.First(u => u.UserId == userId).FirstName = appUserDto.FirstName;
             _context.Users.First(u => u.UserId == userId).LastName = appUserDto.LastName;
             _context.Users.First(u => u.UserId == userId).PasswordHash = Helpers.Hashing.GetSha512Hash(_context.Users.First(u => u.UserId == userId).Salt + appUserDto.PasswordPlainText);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
-            return user;
+            return await Task.FromResult(user);
         }
     }
 }

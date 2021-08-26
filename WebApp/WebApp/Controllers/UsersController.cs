@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using WebApp.Dto;
@@ -19,39 +20,39 @@ namespace WebApp.Controllers
         }
 
         [HttpGet("All")]
-        public ActionResult<List<AppUser>> GetAllUsers()
+        public async Task<ActionResult<List<AppUser>>> GetAllUsers()
         {
-             return _userController.GetAllUsers();
+             return await _userController.GetAllUsers();
         }
         
         [HttpGet]
-        public ActionResult<AppUser?> GetUser(int userId)
+        public async Task<ActionResult<AppUser>> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
 
-            return user;
+            return await user;
         }
 
         [HttpPost]
-        public IActionResult AddUser(AppUserDto appUserDto)
+        public async Task<IActionResult> AddUser(AppUserDto appUserDto)
         {
-           var userId = _userController.AddUser(appUserDto);
+           var userId = await _userController.AddUser(appUserDto);
 
             return Ok(userId);
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(int userId)
+        public async Task<IActionResult> DeleteUser(int userId)
         {
-            _userController.DeleteUser(userId);
+            await _userController.DeleteUser(userId);
             
-            return Ok();
+            return Ok($"User {userId} deleted");
         }
 
         [HttpPut]
-        public IActionResult UpdateUser(int userId, AppUserDto appUserDto)
+        public async Task<IActionResult> UpdateUser(int userId, AppUserDto appUserDto)
         {
-            var user = _userController.UpdateUser(userId, appUserDto);
+            var user = await _userController.UpdateUser(userId, appUserDto);
 
             return Ok(user);
         }
