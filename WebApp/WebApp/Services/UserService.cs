@@ -19,11 +19,13 @@ namespace WebApp.Services
             _context = context;
         }
         
+        /// <inheritdoc/>
         public Task<List<AppUser>> GetAllUsers()
         {
             return Task.FromResult(_context.Users.ToList());
         }
 
+        /// <inheritdoc/>
         public async Task<AppUser> GetUser(int userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
@@ -34,6 +36,7 @@ namespace WebApp.Services
             return await Task.FromResult(user);
         }
 
+        /// <inheritdoc/>
         public async Task<long> AddUser(AppUserDto appUserDto)
         {
             var newUser = new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName,
@@ -44,6 +47,7 @@ namespace WebApp.Services
             return await Task.FromResult(newUser.UserId);
         }
         
+        /// <inheritdoc/>
         public async Task DeleteUser(int userId)
         {
             var user = await GetUser(userId);
@@ -52,6 +56,7 @@ namespace WebApp.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<AppUser> UpdateUser(int userId, AppUserDto appUserDto)
         {
             var user = await GetUser(userId);
