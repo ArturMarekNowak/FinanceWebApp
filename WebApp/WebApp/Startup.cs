@@ -51,6 +51,7 @@ namespace WebApp
 
             services.AddDbContext<AppDatabaseContext>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICompanyService, CompanyService>();
 
             services.AddProblemDetails (options =>
             {

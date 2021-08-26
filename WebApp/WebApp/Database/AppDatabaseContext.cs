@@ -19,6 +19,8 @@ namespace WebApp.Database
         }
 
         public virtual DbSet<AppUser> Users { get; set; }
+        
+        public virtual DbSet<Company> Companies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,10 +35,15 @@ namespace WebApp.Database
         {
             modelBuilder.Entity<AppUser>(entity =>
             {
-                entity.ToTable("User");
-                
+                entity.ToTable("Users");
+
                 entity.HasIndex(e => e.Email, "IX_User_Email")
                     .IsUnique();
+            });
+
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity.ToTable("Companies");
             });
 
             OnModelCreatingPartial(modelBuilder);
