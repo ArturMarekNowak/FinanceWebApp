@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using WebApp.Database;
 using WebApp.Models;
 using WebApp.Dto;
@@ -20,8 +21,10 @@ namespace WebApp.Services
         }
         
         /// <inheritdoc/>
-        public Task<List<AppUser>> GetAllUsers()
+        public Task<List<AppUser>> GetAllUsers(ODataQueryOptions<AppUser> options)
         {
+            var q = options.ApplyTo(_context.Users).AsQueryable();
+            
             return Task.FromResult(_context.Users.ToList());
         }
 

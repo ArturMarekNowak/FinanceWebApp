@@ -7,13 +7,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using WebApp.Database;
 using WebApp.Exceptions;
+using WebApp.Helpers;
+using WebApp.Models;
 using WebApp.Services;
 
 
@@ -33,10 +39,15 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllers().AddOData(options =>
+            {
+                options.AddRouteComponents("api/Users", GetEdmModel());
+                options.Select().Filter().Expand().Filter().OrderBy().Count().SetMaxTop(100);
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });
+                c.OperationFilter<OdataFilteringOptions>();
                 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -72,8 +83,8 @@ namespace WebApp
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            
-            if (_env.IsDevelopment())
+
+                if (_env.IsDevelopment())
             {
                 app.UseExceptionHandler("/error-local-development");
             }
@@ -91,11 +102,18 @@ namespace WebApp
 
             app.UseRouting();
 
+            /*
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+            });
+            */
+            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
 
             app.UseSpa(spa =>
@@ -107,6 +125,14 @@ namespace WebApp
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+        
+        private static IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<AppUser>("AppUser");
+            builder.EntitySet<Company>("Company");
+            return builder.GetEdmModel();
         }
     }
 }

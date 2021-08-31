@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.OData;
 using WebApp.Dto;
 using WebApp.Models;
 using WebApp.Services;
@@ -25,10 +30,12 @@ namespace WebApp.Controllers
         /// <returns>List of AppUser objects</returns>
         /// <response code="200">Clients list returned successfully</response>
         [HttpGet("All")]
-        [ProducesResponseType(200)]
-        public async Task<ActionResult<List<AppUser>>> GetAllUsers()
+        [EnableQuery]
+        [ODataRouteComponent]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<AppUser>>> GetAllUsers(ODataQueryOptions<AppUser> options)
         {
-             return await _userController.GetAllUsers();
+             return await _userController.GetAllUsers(options);
         }
         
         /// <summary>
@@ -39,6 +46,7 @@ namespace WebApp.Controllers
         /// <response code="200">Client returned successfully</response>
         /// <response code="404">Client not found</response>
         [HttpGet("{userId:long}")]
+        [ODataIgnored]
         [ProducesResponseType(200), ProducesResponseType(404)]
         public async Task<ActionResult<AppUser>> GetUser(int userId)
         {
@@ -47,6 +55,7 @@ namespace WebApp.Controllers
             return await user;
         }
         
+        
         /// <summary>
         /// This method adds single client
         /// </summary>
@@ -54,6 +63,7 @@ namespace WebApp.Controllers
         /// <returns>Newly added user identification number</returns>
         /// <response code="201">Client created successfully</response>
         [HttpPost]
+        [ODataIgnored]
         [ProducesResponseType(201), ProducesResponseType(404)]
         public async Task<ActionResult<long>> AddUser(AppUserDto appUserDto)
         {
@@ -70,6 +80,7 @@ namespace WebApp.Controllers
         /// <response code="200">Client deleted successfully</response>
         /// <response code="404">Client not found</response>
         [HttpDelete("{userId:long}")]
+        [ODataIgnored]
         [ProducesResponseType(200), ProducesResponseType(404)]
         public async Task<IActionResult> DeleteUser(int userId)
         {
@@ -87,6 +98,7 @@ namespace WebApp.Controllers
         /// <response code="200">Client updated successfully</response>
         /// <response code="404">Client not found</response>
         [HttpPut("{userId:long}")]
+        [ODataIgnored]
         [ProducesResponseType(200), ProducesResponseType(404)]
         public async Task<IActionResult> UpdateUser(int userId, AppUserDto appUserDto)
         {
@@ -94,6 +106,5 @@ namespace WebApp.Controllers
 
             return Ok(user);
         }
-        
     }
 }
