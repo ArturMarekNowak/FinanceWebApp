@@ -3,6 +3,7 @@ using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -14,7 +15,7 @@ namespace WebApp.Helpers
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (true)
+            if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor && ((descriptor.ControllerName.Equals("Users") || descriptor.ControllerName.Equals("Companies")) && descriptor.ActionName.StartsWith("GetAll")))
             {
                 Dictionary<string, string> parameters = new()
                 {

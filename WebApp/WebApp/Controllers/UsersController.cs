@@ -16,6 +16,7 @@ namespace WebApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(IgnoreApi = false)]
     public sealed class UsersController : ControllerBase
     {
         private readonly IUserService _userController;
@@ -31,7 +32,6 @@ namespace WebApp.Controllers
         /// <response code="200">Clients list returned successfully</response>
         [HttpGet("All")]
         [EnableQuery]
-        [ODataRouteComponent]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<AppUser>>> GetAllUsers(ODataQueryOptions<AppUser> options)
         {
