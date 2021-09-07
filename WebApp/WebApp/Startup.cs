@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using WebApp.Database;
 using WebApp.Exceptions;
+using WebApp.Helpers;
 using WebApp.Services;
 
 
@@ -31,7 +32,10 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(ActionsFilter));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.Json;
 using WebApp.Database;
 
 namespace WebApp.Models
@@ -43,6 +44,11 @@ namespace WebApp.Models
         public DateTime CreatedAccount { get; set; } = DateTime.Now;
 
         public DateTime LastActive { get; set; } = DateTime.Now;
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
+        }
     }
 }
 
