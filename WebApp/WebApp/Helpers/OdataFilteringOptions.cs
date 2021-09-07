@@ -33,7 +33,8 @@ namespace WebApp.Helpers
                     {
                         Name = pair.Key,
                         Required = false,
-                        Description = pair.Value
+                        Description = pair.Value,
+                        In = new ParameterLocation()
                     });
                 }
             }
