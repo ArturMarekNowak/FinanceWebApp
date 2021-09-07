@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public sealed class CompaniesController : ControllerBase
+    [Route("api/Companies")]
+    [ApiExplorerSettings(IgnoreApi = false)]
+    public sealed class CompaniesController : ODataController
     {
         private readonly ICompanyService _companyController;
         public CompaniesController(ICompanyService companyController)
@@ -21,11 +25,14 @@ namespace WebApp.Controllers
         /// </summary>
         /// <returns>List of Company objects</returns>
         /// <response code="200">Company list returned successfully</response>
-        [HttpGet("All")]
+        [HttpGet]
+        [EnableQuery(PageSize = 100)]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<List<Company>>> GetAllCompanies()
+        public ActionResult<IQueryable<Company>> GetAllCompanies()
         {
-            return await _companyController.GetAllCompanies();
+            var companies = _companyController.GetAllCompanies();
+
+            return Ok(companies);
         }
         
         /// <summary>

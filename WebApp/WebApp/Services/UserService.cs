@@ -21,11 +21,9 @@ namespace WebApp.Services
         }
         
         /// <inheritdoc/>
-        public Task<List<AppUser>> GetAllUsers(ODataQueryOptions<AppUser> options)
+        public IQueryable<AppUser> GetAllUsers()
         {
-            var q = options.ApplyTo(_context.Users).AsQueryable();
-            
-            return Task.FromResult(_context.Users.ToList());
+            return _context.Users.AsQueryable();
         }
 
         /// <inheritdoc/>

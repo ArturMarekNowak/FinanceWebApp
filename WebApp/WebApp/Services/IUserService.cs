@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -10,7 +11,7 @@ namespace WebApp.Services
 {
     public interface IUserService
     {
-        Task<List<AppUser>> GetAllUsers(ODataQueryOptions<AppUser> options);
+        IQueryable<AppUser> GetAllUsers();
         
         Task<AppUser> GetUser(int userId);
             

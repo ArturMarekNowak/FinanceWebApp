@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Hellang.Middleware.ProblemDetails;
@@ -8,11 +10,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
@@ -41,8 +45,8 @@ namespace WebApp
         {
             services.AddControllers().AddOData(options =>
             {
-                options.AddRouteComponents("api/Users", GetEdmModel());
                 options.Select().Filter().Expand().Filter().OrderBy().Count().SetMaxTop(100);
+                options.AddRouteComponents("api", GetEdmModel());
             });
             services.AddSwaggerGen(c =>
             {
@@ -102,15 +106,6 @@ namespace WebApp
 
             app.UseRouting();
 
-            /*
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
-            */
-            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -127,11 +122,11 @@ namespace WebApp
             });
         }
         
-        private static IEdmModel GetEdmModel()
+        public IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<AppUser>("AppUser");
-            builder.EntitySet<Company>("Company");
+            builder.EntitySet<AppUser>("Users");
+            builder.EntitySet<Company>("Companies");
             return builder.GetEdmModel();
         }
     }

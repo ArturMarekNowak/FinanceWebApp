@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.OData.Query;
 using WebApp.Database;
 using WebApp.Exceptions;
 using WebApp.Models;
@@ -17,9 +18,9 @@ namespace WebApp.Services
         }
         
         /// <inheritdoc/>
-        public Task<List<Company>> GetAllCompanies()
+        public IQueryable<Company> GetAllCompanies()
         {
-            return Task.FromResult(_context.Companies.ToList());
+            return _context.Companies.AsQueryable();
         }
 
         /// <inheritdoc/>

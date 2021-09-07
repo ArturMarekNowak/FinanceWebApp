@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Attributes;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.OData;
 using WebApp.Dto;
@@ -15,9 +17,9 @@ using WebApp.Services;
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Users")]
     [ApiExplorerSettings(IgnoreApi = false)]
-    public sealed class UsersController : ControllerBase
+    public sealed class UsersController : ODataController
     {
         private readonly IUserService _userController;
         public UsersController(IUserService userController)
@@ -30,12 +32,14 @@ namespace WebApp.Controllers
         /// </summary>
         /// <returns>List of AppUser objects</returns>
         /// <response code="200">Clients list returned successfully</response>
-        [HttpGet("All")]
-        [EnableQuery]
+        [HttpGet]
+        [EnableQuery(PageSize = 100)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<AppUser>>> GetAllUsers(ODataQueryOptions<AppUser> options)
+        public ActionResult<IQueryable<AppUser>> GetAllUsers()
         {
-             return await _userController.GetAllUsers(options);
+             var users = _userController.GetAllUsers();
+
+             return Ok(users);
         }
         
         /// <summary>
