@@ -46,9 +46,9 @@ namespace WebApp.Controllers
         [ProducesResponseType(200), ProducesResponseType(404)]
         public async Task<ActionResult<Company>> GetCompany(int companyId)
         {
-            var user = await _companyController.GetCompany(companyId);
+            var company = await _companyController.GetCompany(companyId);
 
-            return user;
+            return company;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace WebApp.Services
             var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
 
             if (user is null)
-                throw new BadRequestException($"User with Id {userId} does not exist");
+                throw new NotFoundException($"User with Id {userId} does not exist");
                 
             return await Task.FromResult(user);
         }
@@ -52,7 +52,7 @@ namespace WebApp.Services
         public async Task DeleteUser(int userId)
         {
             var user = await GetUser(userId);
-            if (user is null) throw new BadRequestException($"User with Id {userId} does not exist");
+            if (user is null) throw new NotFoundException($"User with Id {userId} does not exist");
             _context.Remove(user);
             await _context.SaveChangesAsync();
         }
@@ -63,7 +63,7 @@ namespace WebApp.Services
             var user = await GetUser(userId);
 
             if (user is null)
-                throw new BadRequestException($"User with Id {userId} does not exist");
+                throw new NotFoundException($"User with Id {userId} does not exist");
             
             _context.Users.First(u => u.UserId == userId).Email = appUserDto.Email;
             _context.Users.First(u => u.UserId == userId).FirstName = appUserDto.FirstName;

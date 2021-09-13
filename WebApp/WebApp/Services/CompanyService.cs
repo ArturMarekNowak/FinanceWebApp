@@ -29,7 +29,7 @@ namespace WebApp.Services
             var user = _context.Companies.FirstOrDefault(u => u.CompanyId == companyId);
 
             if (user is null)
-                throw new BadRequestException($"User with Id {companyId} does not exist");
+                throw new NotFoundException($"User with Id {companyId} does not exist");
                 
             return await Task.FromResult(user);
         }
