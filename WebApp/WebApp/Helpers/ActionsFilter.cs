@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace WebApp.Helpers
 {
@@ -7,7 +8,7 @@ namespace WebApp.Helpers
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            Console.WriteLine("bar");
+            Console.WriteLine("bar"); 
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
