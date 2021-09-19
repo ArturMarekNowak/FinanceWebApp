@@ -1,12 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import './Home.css';
+import sample from '../../resources/FinanceWebAppHomePage.jpg';
 
 const Home = () => (
-    <div id="videodiv">
-      <video className='videoTag' autoPlay loop muted>
-          <source src='https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1920_18MG.mp4' type='video/mp4' />
-      </video>
+    <div className="row">
+        <div className="col-md-6">
+            <section>
+                <img src={sample} width={500} height={300} alt={"foo"}/>
+            </section>
+        </div>
+        <div className="col-md-6 col-md-offset-2">
+            <section>
+                <p>
+                    Our financial web application broadcasts informations about fastest growths on stock market to our users.
+                </p>
+            </section>
+        </div>
     </div>
 );
 
