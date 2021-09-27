@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore.Design;
+using Serilog.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using WebApp.Database;
 using WebApp.Exceptions;
@@ -21,17 +24,25 @@ namespace WebApp
     public sealed class Startup
     {
         private readonly IWebHostEnvironment _env;
+        private IConfiguration _configuration;
+
         
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            _configuration = configuration;
             _env = env;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
+            /*
+            services.AddLogging(builder =>
+            {
+                builder.AddFile("Logs/logs.txt");
+                builder.AddConsole();
+            });
+            */
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(ActionsFilter));
@@ -61,7 +72,7 @@ namespace WebApp
             return exception.ToProblemDetails(context);
         }
         
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             app.UseSwagger();
 
