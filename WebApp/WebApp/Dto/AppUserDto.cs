@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Text.Json;
 
 namespace WebApp.Dto
 {
@@ -11,5 +11,10 @@ namespace WebApp.Dto
         public string LastName { get; set; } = string.Empty;
         
         public string PasswordPlainText { get; set; } = string.Empty;
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
+        }
     }
 }

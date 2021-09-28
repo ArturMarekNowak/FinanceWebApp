@@ -1,13 +1,10 @@
 using System;
-using System.Net.Http;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.EntityFrameworkCore.Design;
-using Serilog.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,14 +32,6 @@ namespace WebApp
         
         public void ConfigureServices(IServiceCollection services)
         {
-            /*
-            services.AddLogging(builder =>
-            {
-                builder.AddFile("Logs/logs.txt");
-                builder.AddConsole();
-            });
-            */
-
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(ActionsFilter));
@@ -115,6 +104,9 @@ namespace WebApp
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            loggerFactory.AddFile("Logs/logs.txt");
+            SharedLogger.Logger = loggerFactory.CreateLogger("Shared");
         }
     }
 }

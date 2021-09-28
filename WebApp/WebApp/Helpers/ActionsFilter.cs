@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +10,7 @@ namespace WebApp.Helpers
         {
             var actionName = context.ActionDescriptor.DisplayName;
             var inputParameters = string.Join(", ", context.ActionArguments.Values);
-            
+
             Console.WriteLine(actionName + " being executed");
             Console.WriteLine("Input parameters: " + inputParameters);
             
