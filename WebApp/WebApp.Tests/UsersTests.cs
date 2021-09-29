@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using NUnit.Framework;
 using WebApp.Controllers;
 using WebApp.Services;
@@ -10,9 +11,11 @@ namespace BaseTests
         [Test]
         public void GetAllUsersOk()
         {
+            var response = _client.GetAsync("api/Users");
             
+            Console.WriteLine(response);
             
-            Assert.Pass();
+            Assert.AreEqual(HttpStatusCode.OK, response);
         }
         
         [Test]

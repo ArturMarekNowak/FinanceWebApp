@@ -1,18 +1,20 @@
+using System.Net.Http;
 using NUnit.Framework;
+using TestProject1;
+using WebApp;
 
 namespace BaseTests
 {
     public class BaseTests
     {
-        [SetUp]
+        protected HttpClient _client;
+        protected CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
+    
+        [OneTimeSetUp]
         public void Setup()
         {
-        }
-
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
+            _customWebApplicationFactory = new CustomWebApplicationFactory<Startup>();
+            _client = _customWebApplicationFactory.CreateClient();
         }
     }
 }

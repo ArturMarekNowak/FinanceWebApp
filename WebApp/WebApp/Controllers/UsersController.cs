@@ -18,13 +18,13 @@ namespace WebApp.Controllers
             _userController = userController;
         }
 
-        [HttpGet("All")]
+        [HttpGet]
         public ActionResult<List<AppUser>> GetAllUsers()
         {
              return _userController.GetAllUsers();
         }
         
-        [HttpGet]
+        [HttpGet("{userId:int}")]
         public ActionResult<AppUser?> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
@@ -40,7 +40,7 @@ namespace WebApp.Controllers
             return Ok(userId);
         }
 
-        [HttpDelete]
+        [HttpDelete("{userId:int}")]
         public IActionResult DeleteUser(int userId)
         {
             _userController.DeleteUser(userId);
@@ -48,7 +48,7 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{userId:int}")]
         public IActionResult UpdateUser(int userId, AppUserDto appUserDto)
         {
             var user = _userController.UpdateUser(userId, appUserDto);
