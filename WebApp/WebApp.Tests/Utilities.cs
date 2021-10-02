@@ -33,6 +33,19 @@ namespace BaseTests
                 PasswordHash = "ytrewq",
                 UserId = 2
             });
+            
+            // User for testing UpdateUser
+            appDatabaseContext.Users.Add(new AppUser
+            {
+                Email = "klm@mail.com",
+                Salt = "789",
+                CreatedAccount = DateTime.Now,
+                FirstName = "opr",
+                LastActive = DateTime.Now,
+                LastName = "mln",
+                PasswordHash = "zaq123",
+                UserId = 3
+            });
 
             appDatabaseContext.SaveChanges();
         }

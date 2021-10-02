@@ -58,5 +58,49 @@ namespace BaseTests
             
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
+        
+        [Test]
+        public void DeleteUser_BadRequest_WrongId()
+        {
+            var response = _client.DeleteAsync("api/Users/-1234").Result;
+            
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+        
+        [Test]
+        public void DeleteUser_Ok()
+        {
+            var response = _client.DeleteAsync("api/Users/2").Result;
+            
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        
+        [Test]
+        public void UpdateUser_Ok()
+        {
+            var response = _client.PutAsJsonAsync("api/Users/3", new AppUserDto
+            {
+                Email = "xyz@mail.com", 
+                FirstName = "John", 
+                LastName = "Malkovich", 
+                PasswordPlainText = "strawberry"
+            } ).Result;
+            
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        
+        [Test]
+        public void UpdateUser_BadRequest_WrongId()
+        {
+            var response = _client.PutAsJsonAsync("api/Users/12345678", new AppUserDto
+            {
+                Email = "abcdef@mail.com", 
+                FirstName = "John", 
+                LastName = "Malkovich", 
+                PasswordPlainText = "strawberry"
+            } ).Result;
+            
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
     }
 }
