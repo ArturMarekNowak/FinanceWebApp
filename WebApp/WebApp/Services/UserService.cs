@@ -23,7 +23,7 @@ namespace WebApp.Services
             return _context.Users.ToList();
         }
 
-        public AppUser? GetUser(int userId)
+        public AppUser GetUser(int userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
 
@@ -35,8 +35,14 @@ namespace WebApp.Services
 
         public long AddUser(AppUserDto appUserDto)
         {
+            var isEmailInDatabase = _context.Users.FirstOrDefault(u => u.Email == appUserDto.Email);
+
+            if (isEmailInDatabase is not null)
+                throw new BadRequestException($"Email {appUserDto.Email} already exists in database");
+            
             var newUser = new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName,
                 appUserDto.PasswordPlainText);
+            
             _context.Add(newUser);
             _context.SaveChanges();
 

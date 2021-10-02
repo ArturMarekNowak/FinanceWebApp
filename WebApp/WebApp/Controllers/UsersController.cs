@@ -25,11 +25,11 @@ namespace WebApp.Controllers
         }
         
         [HttpGet("{userId:int}")]
-        public ActionResult<AppUser?> GetUser(int userId)
+        public ActionResult<AppUser> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
 
-            return user;
+            return Ok(user);
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace WebApp.Controllers
         {
            var userId = _userController.AddUser(appUserDto);
 
-            return Ok(userId);
+            return CreatedAtAction(nameof(AddUser), new { id = userId});
         }
 
         [HttpDelete("{userId:int}")]

@@ -9,7 +9,7 @@ namespace BaseTests
     {
         protected HttpClient _client;
         protected CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
-    
+        
         [OneTimeSetUp]
         public void Setup()
         {

@@ -10,7 +10,7 @@ namespace WebApp.Services
     {
         List<AppUser> GetAllUsers();
         
-        AppUser? GetUser(int userId);
+        AppUser GetUser(int userId);
 
         long AddUser(AppUserDto appUserDto);
         
