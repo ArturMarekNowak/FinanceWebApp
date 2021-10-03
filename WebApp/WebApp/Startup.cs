@@ -67,7 +67,8 @@ namespace WebApp
             services.AddDbContext<AppDatabaseContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICompanyService, CompanyService>();
-
+            services.AddScoped<IPriceService, PriceService>();
+            
             services.AddProblemDetails (options =>
             {
                 options.Map(new Func<HttpContext, MappedException, ProblemDetails>(MapException));

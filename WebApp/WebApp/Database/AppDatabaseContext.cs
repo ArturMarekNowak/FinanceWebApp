@@ -21,6 +21,8 @@ namespace WebApp.Database
         public virtual DbSet<AppUser> Users { get; set; }
         
         public virtual DbSet<Company> Companies { get; set; }
+        
+        public virtual DbSet<CompanyPrice> Prices { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,6 +46,11 @@ namespace WebApp.Database
             modelBuilder.Entity<Company>(entity =>
             {
                 entity.ToTable("Companies");
+            });
+            
+            modelBuilder.Entity<CompanyPrice>(entity =>
+            {
+                entity.ToTable("Prices");
             });
 
             OnModelCreatingPartial(modelBuilder);
