@@ -32,13 +32,7 @@ namespace WebApp.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppUser>(entity =>
-            {
-                entity.ToTable("Users");
-
-                entity.HasIndex(e => e.Email, "IX_User_Email")
-                    .IsUnique();
-            });
+            modelBuilder.Entity<AppUser>(entity => { entity.ToTable("Users"); });
 
             modelBuilder.Entity<Company>(entity => { entity.ToTable("Companies"); });
 

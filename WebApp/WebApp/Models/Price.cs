@@ -7,7 +7,7 @@ namespace WebApp.Models
     {
         [Key] public long CompanyId { get; set; }
 
-        public long PriceId { get; set; }
+        [Key] public long PriceId { get; set; }
 
         public DateTime TimeStamp { get; set; }
 
