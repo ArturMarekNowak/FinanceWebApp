@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using WebApp.Models;
 using WebApp.Dto;
 
@@ -8,15 +11,14 @@ namespace WebApp.Services
 {
     public interface IUserService
     {
-        List<AppUser> GetAllUsers();
+        IQueryable<AppUser> GetAllUsers();
         
-        AppUser? GetUser(int userId);
-
-        long AddUser(AppUserDto appUserDto);
+        Task<AppUser> GetUser(int userId);
+            
+        Task<long> AddUser(AppUserDto appUserDto);
         
-        void DeleteUser(int userId);
+        Task DeleteUser(int userId);
 
-        AppUser UpdateUser(int userId, AppUserDto appUserDto);
-
+        Task<AppUser> UpdateUser(int userId, AppUserDto appUserDto);
     }
 }

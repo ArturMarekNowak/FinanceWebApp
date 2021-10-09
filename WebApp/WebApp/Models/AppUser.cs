@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebApp.Database;
 
@@ -27,21 +28,29 @@ namespace WebApp.Models
             CreatedAccount = DateTime.Now;
             LastActive = DateTime.Now;
         }
-
-        public int UserId { get; set; }
-
-        public string Email { get; set; } 
-
-        public string FirstName { get; set; } 
-
-        public string LastName { get; set; } 
-
-        public string PasswordHash { get; set; } 
-
-        public string Salt { get; set; }
         
+        [Key]
+        public long UserId { get; set; }
+        
+        [Required]
+        public string Email { get; set; } 
+        
+        [Required]
+        public string FirstName { get; set; } 
+        
+        [Required]
+        public string LastName { get; set; } 
+        
+        [Required]
+        public string PasswordHash { get; set; } 
+        
+        [Required]
+        public string Salt { get; set; }
+
+        [Required]
         public DateTime CreatedAccount { get; set; } = DateTime.Now;
 
+        [Required]
         public DateTime LastActive { get; set; } = DateTime.Now;
     }
 }
