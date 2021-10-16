@@ -11,3 +11,14 @@ html { font-size: 14px; }
 }
 
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+a.text-dark:hover, a.text-dark:focus {
+    color: rgb(0, 150, 255) !important;
+}
+
+.text-dark {
+    color: rgb(0, 0, 0) !important;
+    font-family: "Arial", Arial, serif;
+}
+
+.border-bottom { border-bottom: 2px solid rgb(0, 100, 230) !important; }
