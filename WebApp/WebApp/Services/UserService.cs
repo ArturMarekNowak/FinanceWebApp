@@ -40,8 +40,14 @@ namespace WebApp.Services
         /// <inheritdoc/>
         public async Task<long> AddUser(AppUserDto appUserDto)
         {
+            var isEmailInDatabase = _context.Users.FirstOrDefault(u => u.Email == appUserDto.Email);
+
+            if (isEmailInDatabase is not null)
+                throw new BadRequestException($"Email {appUserDto.Email} already exists in database");
+            
             var newUser = new AppUser(appUserDto.Email, appUserDto.FirstName, appUserDto.LastName,
                 appUserDto.PasswordPlainText);
+            
             _context.Add(newUser);
             await _context.SaveChangesAsync();
 

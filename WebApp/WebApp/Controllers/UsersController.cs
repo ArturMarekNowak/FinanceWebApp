@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         {
             _userController = userController;
         }
-
+        
         /// <summary>
         /// This method retrieves all clients registered on application
         /// </summary>
@@ -73,9 +73,9 @@ namespace WebApp.Controllers
         {
            var userId = await _userController.AddUser(appUserDto);
 
-            return CreatedAtAction(nameof(AddUser), new {Id = userId});
+            return CreatedAtAction(nameof(AddUser), new { id = userId});
         }
-
+        
         /// <summary>
         /// This method deletes a single client
         /// </summary>
@@ -92,7 +92,7 @@ namespace WebApp.Controllers
             
             return Ok($"User {userId} deleted");
         }
-
+        
         /// <summary>
         /// This method updates a single client
         /// </summary>
