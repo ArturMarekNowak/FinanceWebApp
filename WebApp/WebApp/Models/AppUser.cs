@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json;
 using WebApp.Database;
 
 namespace WebApp.Models
@@ -52,6 +53,11 @@ namespace WebApp.Models
 
         [Required]
         public DateTime LastActive { get; set; } = DateTime.Now;
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
+        }
     }
 }
 

@@ -1,3 +1,4 @@
+﻿using System.Text.Json;
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -29,5 +30,10 @@ namespace WebApp.Dto
         /// </summary>
         [Required(AllowEmptyStrings = false)]
         public string PasswordPlainText { get; set; } = string.Empty;
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
+        }
     }
 }
