@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using WebApp.Database;
 using WebApp.Models;
 using WebApp.Dto;
@@ -18,22 +20,25 @@ namespace WebApp.Services
             _context = context;
         }
         
-        public List<AppUser> GetAllUsers()
+        /// <inheritdoc/>
+        public IQueryable<AppUser> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.AsQueryable();
         }
 
-        public AppUser GetUser(int userId)
+        /// <inheritdoc/>
+        public async Task<AppUser> GetUser(int userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
 
             if (user is null)
-                throw new BadRequestException($"User with Id {userId} does not exist");
+                throw new NotFoundException($"User with Id {userId} does not exist");
                 
-            return user;
+            return await Task.FromResult(user);
         }
 
-        public long AddUser(AppUserDto appUserDto)
+        /// <inheritdoc/>
+        public async Task<long> AddUser(AppUserDto appUserDto)
         {
             var isEmailInDatabase = _context.Users.FirstOrDefault(u => u.Email == appUserDto.Email);
 
@@ -44,33 +49,35 @@ namespace WebApp.Services
                 appUserDto.PasswordPlainText);
             
             _context.Add(newUser);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return newUser.UserId;
+            return await Task.FromResult(newUser.UserId);
         }
         
-        public void DeleteUser(int userId)
+        /// <inheritdoc/>
+        public async Task DeleteUser(int userId)
         {
-            var user = GetUser(userId);
-            if (user is null) throw new BadRequestException($"User with Id {userId} does not exist");
+            var user = await GetUser(userId);
+            if (user is null) throw new NotFoundException($"User with Id {userId} does not exist");
             _context.Remove(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public AppUser UpdateUser(int userId, AppUserDto appUserDto)
+        /// <inheritdoc/>
+        public async Task<AppUser> UpdateUser(int userId, AppUserDto appUserDto)
         {
-            var user = GetUser(userId);
+            var user = await GetUser(userId);
 
             if (user is null)
-                throw new BadRequestException($"User with Id {userId} does not exist");
+                throw new NotFoundException($"User with Id {userId} does not exist");
             
             _context.Users.First(u => u.UserId == userId).Email = appUserDto.Email;
             _context.Users.First(u => u.UserId == userId).FirstName = appUserDto.FirstName;
             _context.Users.First(u => u.UserId == userId).LastName = appUserDto.LastName;
             _context.Users.First(u => u.UserId == userId).PasswordHash = Helpers.Hashing.GetSha512Hash(_context.Users.First(u => u.UserId == userId).Salt + appUserDto.PasswordPlainText);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
-            return user;
+            return await Task.FromResult(user);
         }
     }
 }
