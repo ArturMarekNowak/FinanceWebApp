@@ -1,18 +1,19 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using WebApp.Database;
+using System.Text.Json;
+
+#nullable disable
 
 namespace WebApp.Models
 {
-    public sealed class AppUser
+    public sealed class User
     {
-        public AppUser()
+        public User()
         {
             
         }
         
-        public AppUser(string email, string firstName, string lastName, string passwordPlainText)
+        public User(string email, string firstName, string lastName, string passwordPlainText)
         {
             Random random = new();
 
@@ -29,29 +30,25 @@ namespace WebApp.Models
             LastActive = DateTime.Now;
         }
         
-        [Key]
         public long UserId { get; set; }
         
-        [Required]
-        public string Email { get; set; } 
+        public string Email { get; set; }
         
-        [Required]
-        public string FirstName { get; set; } 
+        public string FirstName { get; set; }
         
-        [Required]
-        public string LastName { get; set; } 
+        public string LastName { get; set; }
         
-        [Required]
-        public string PasswordHash { get; set; } 
+        public string PasswordHash { get; set; }
         
-        [Required]
         public string Salt { get; set; }
-
-        [Required]
-        public DateTime CreatedAccount { get; set; } = DateTime.Now;
-
-        [Required]
-        public DateTime LastActive { get; set; } = DateTime.Now;
+        
+        public DateTime CreatedAccount { get; set; }
+        
+        public DateTime LastActive { get; set; }
+        
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
+        }
     }
 }
-

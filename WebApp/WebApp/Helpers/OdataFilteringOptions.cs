@@ -1,11 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Reflection.Metadata;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -15,7 +9,9 @@ namespace WebApp.Helpers
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor && ((descriptor.ControllerName.Equals("Users") || descriptor.ControllerName.Equals("Companies")) && descriptor.ActionName.StartsWith("GetAll")))
+            if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor &&
+                (descriptor.ControllerName.Equals("Users") || descriptor.ControllerName.Equals("Companies") ||
+                 descriptor.ControllerName.Equals("Prices")) && descriptor.ActionName.StartsWith("GetAll"))
             {
                 Dictionary<string, string> parameters = new()
                 {
@@ -28,7 +24,6 @@ namespace WebApp.Helpers
                 operation.Parameters = new List<OpenApiParameter>();
 
                 foreach (var pair in parameters)
-                {
                     operation.Parameters.Add(new OpenApiParameter
                     {
                         Name = pair.Key,
@@ -36,8 +31,7 @@ namespace WebApp.Helpers
                         Description = pair.Value,
                         In = new ParameterLocation()
                     });
-                }
             }
         }
-    };
+    }
 }

@@ -11,14 +11,14 @@ namespace WebApp.Services
 {
     public interface IUserService
     {
-        IQueryable<AppUser> GetAllUsers();
+        IQueryable<User> GetAllUsers();
         
-        Task<AppUser> GetUser(int userId);
+        Task<User> GetUser(int userId);
             
-        Task<long> AddUser(AppUserDto appUserDto);
+        Task<long> AddUser(NewUser appUserDto);
         
         Task DeleteUser(int userId);
 
-        Task<AppUser> UpdateUser(int userId, AppUserDto appUserDto);
+        Task<User> UpdateUser(int userId, NewUser appUserDto);
     }
 }

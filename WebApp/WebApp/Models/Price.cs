@@ -5,13 +5,14 @@ using System.Collections.Generic;
 
 namespace WebApp.Models
 {
-    public partial class Company
+    public sealed class Price
     {
         public long CompanyId { get; set; }
         
-        public string Acronym { get; set; }
+        public long PriceId { get; set; }
         
-        public string FullName { get; set; }
+        public string TimeStamp { get; set; }
         
+        public byte[] Value { get; set; }
     }
 }

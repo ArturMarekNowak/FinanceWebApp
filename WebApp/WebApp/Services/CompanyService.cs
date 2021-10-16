@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.OData.Query;
-using WebApp.Database;
 using WebApp.Exceptions;
 using WebApp.Models;
 

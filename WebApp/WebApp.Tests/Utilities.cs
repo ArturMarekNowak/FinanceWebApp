@@ -1,5 +1,4 @@
 ﻿using System;
-using WebApp.Database;
 using WebApp.Models;
 
 namespace BaseTests
@@ -9,7 +8,7 @@ namespace BaseTests
         public static void InitializeDbForTests(AppDatabaseContext appDatabaseContext)
         {
             // User for testing GetUser
-            appDatabaseContext.Users.Add(new AppUser
+            appDatabaseContext.Users.Add(new User
             {
                 Email = "abc@mail.com",
                 Salt = "123",
@@ -22,7 +21,7 @@ namespace BaseTests
             });
             
             // User for testing DeleteUser
-            appDatabaseContext.Users.Add(new AppUser
+            appDatabaseContext.Users.Add(new User
             {
                 Email = "def@mail.com",
                 Salt = "123",
@@ -35,7 +34,7 @@ namespace BaseTests
             });
             
             // User for testing UpdateUser
-            appDatabaseContext.Users.Add(new AppUser
+            appDatabaseContext.Users.Add(new User
             {
                 Email = "klm@mail.com",
                 Salt = "789",

@@ -18,7 +18,7 @@ namespace BaseTests
         [Test]
         public void AddUser_Created()
         {
-            var response = _client.PostAsJsonAsync("api/Users", new AppUserDto
+            var response = _client.PostAsJsonAsync("api/Users", new NewUser
             {
                 Email = "ghi@mail.com", 
                 FirstName = "John", 
@@ -32,7 +32,7 @@ namespace BaseTests
         [Test]
         public void AddUser_BadRequest_EmailIsAlreadyInDatabase()
         {
-            var response = _client.PostAsJsonAsync("api/Users", new AppUserDto
+            var response = _client.PostAsJsonAsync("api/Users", new NewUser
             {
                 Email = "abc@mail.com", 
                 FirstName = "John", 
@@ -56,7 +56,7 @@ namespace BaseTests
         {
             var response = _client.GetAsync("api/Users/-1234").Result;
             
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
         
         [Test]
@@ -64,7 +64,7 @@ namespace BaseTests
         {
             var response = _client.DeleteAsync("api/Users/-1234").Result;
             
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
         
         [Test]
@@ -78,7 +78,7 @@ namespace BaseTests
         [Test]
         public void UpdateUser_Ok()
         {
-            var response = _client.PutAsJsonAsync("api/Users/3", new AppUserDto
+            var response = _client.PutAsJsonAsync("api/Users/3", new NewUser
             {
                 Email = "xyz@mail.com", 
                 FirstName = "John", 
@@ -92,7 +92,7 @@ namespace BaseTests
         [Test]
         public void UpdateUser_BadRequest_WrongId()
         {
-            var response = _client.PutAsJsonAsync("api/Users/12345678", new AppUserDto
+            var response = _client.PutAsJsonAsync("api/Users/12345678", new NewUser
             {
                 Email = "abcdef@mail.com", 
                 FirstName = "John", 
@@ -100,7 +100,7 @@ namespace BaseTests
                 PasswordPlainText = "strawberry"
             } ).Result;
             
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }

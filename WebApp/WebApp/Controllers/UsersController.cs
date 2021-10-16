@@ -30,12 +30,12 @@ namespace WebApp.Controllers
         /// <summary>
         /// This method retrieves all clients registered on application
         /// </summary>
-        /// <returns>List of AppUser objects</returns>
+        /// <returns>List of User objects</returns>
         /// <response code="200">Clients list returned successfully</response>
         [HttpGet]
         [EnableQuery(PageSize = 100)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IQueryable<AppUser>> GetAllUsers()
+        public ActionResult<IQueryable<User>> GetAllUsers()
         {
              var users = _userController.GetAllUsers();
 
@@ -46,13 +46,13 @@ namespace WebApp.Controllers
         /// This method retrieves single client
         /// </summary>
         /// <param name="userId">User identification number</param>
-        /// <returns>Single AppUser objects</returns>
+        /// <returns>Single User objects</returns>
         /// <response code="200">Client returned successfully</response>
         /// <response code="404">Client not found</response>
         [HttpGet("{userId:long}")]
         [ODataIgnored]
         [ProducesResponseType(200), ProducesResponseType(404)]
-        public async Task<ActionResult<AppUser>> GetUser(int userId)
+        public async Task<ActionResult<User>> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
 
@@ -63,13 +63,13 @@ namespace WebApp.Controllers
         /// <summary>
         /// This method adds single client
         /// </summary>
-        /// <param name="appUserDto">AppUserDto object</param>
+        /// <param name="appUserDto">UserDto object</param>
         /// <returns>Newly added user identification number</returns>
         /// <response code="201">Client created successfully</response>
         [HttpPost]
         [ODataIgnored]
         [ProducesResponseType(201), ProducesResponseType(404)]
-        public async Task<ActionResult<long>> AddUser(AppUserDto appUserDto)
+        public async Task<ActionResult<long>> AddUser(NewUser appUserDto)
         {
            var userId = await _userController.AddUser(appUserDto);
 
@@ -97,14 +97,14 @@ namespace WebApp.Controllers
         /// This method updates a single client
         /// </summary>
         /// <param name="userId">User identification number</param>
-        /// <param name="appUserDto">AppUserDto object</param>
-        /// <returns>Updated user AppUserDto object</returns>
+        /// <param name="appUserDto">UserDto object</param>
+        /// <returns>Updated user UserDto object</returns>
         /// <response code="200">Client updated successfully</response>
         /// <response code="404">Client not found</response>
         [HttpPut("{userId:long}")]
         [ODataIgnored]
         [ProducesResponseType(200), ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateUser(int userId, AppUserDto appUserDto)
+        public async Task<IActionResult> UpdateUser(int userId, NewUser appUserDto)
         {
             var user = await _userController.UpdateUser(userId, appUserDto);
 
