@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
     
-    [ApiController, ApiExplorerSettings(IgnoreApi = true)]
+    [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public sealed class ErrorController : ControllerBase
     {
         [Route("error-local-development")]

@@ -56,7 +56,7 @@ namespace WebApp.Models
 
                 entity.Property(e => e.Value)
                     .IsRequired()
-                    .HasColumnType("NUMERIC");
+                    .HasColumnType("REAL");
             });
 
             modelBuilder.Entity<User>(entity =>

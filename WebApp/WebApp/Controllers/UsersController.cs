@@ -11,12 +11,14 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.OData;
 using WebApp.Dto;
+using WebApp.Helpers;
 using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     [ApiController]
+    [ActionsFilter]
     [Route("api/Users")]
     [ApiExplorerSettings(IgnoreApi = false)]
     public sealed class UsersController : ODataController

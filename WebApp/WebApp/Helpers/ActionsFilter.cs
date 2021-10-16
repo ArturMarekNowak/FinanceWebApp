@@ -4,9 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApp.Helpers
 {
-    public class ActionsFilter : IActionFilter
+    public class ActionsFilter : ActionFilterAttribute
     {
-        public void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             var actionName = context.ActionDescriptor.DisplayName;
             var inputParameters = string.Join(", ", context.ActionArguments.Values);
@@ -18,7 +18,7 @@ namespace WebApp.Helpers
             SharedLogger.Logger.LogInformation("Input parameters: " + inputParameters);
         }
 
-        public void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
             var actionName = context.ActionDescriptor.DisplayName;
             var result = context.Result;

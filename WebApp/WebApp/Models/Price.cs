@@ -13,6 +13,6 @@ namespace WebApp.Models
         
         public string TimeStamp { get; set; }
         
-        public byte[] Value { get; set; }
+        public double Value { get; set; }
     }
 }
