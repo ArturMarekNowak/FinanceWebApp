@@ -1,7 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.OData;
 using WebApp.Dto;
 using WebApp.Models;
 using WebApp.Services;
@@ -9,8 +17,9 @@ using WebApp.Services;
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public sealed class UsersController : ControllerBase
+    [Route("api/Users")]
+    [ApiExplorerSettings(IgnoreApi = false)]
+    public sealed class UsersController : ODataController
     {
         private readonly IUserService _userController;
         public UsersController(IUserService userController)
@@ -18,43 +27,88 @@ namespace WebApp.Controllers
             _userController = userController;
         }
 
-        [HttpGet("All")]
-        public ActionResult<List<AppUser>> GetAllUsers()
+        /// <summary>
+        /// This method retrieves all clients registered on application
+        /// </summary>
+        /// <returns>List of AppUser objects</returns>
+        /// <response code="200">Clients list returned successfully</response>
+        [HttpGet]
+        [EnableQuery(PageSize = 100)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IQueryable<AppUser>> GetAllUsers()
         {
-             return _userController.GetAllUsers();
+             var users = _userController.GetAllUsers();
+
+             return Ok(users);
         }
         
-        [HttpGet]
-        public ActionResult<AppUser?> GetUser(int userId)
+        /// <summary>
+        /// This method retrieves single client
+        /// </summary>
+        /// <param name="userId">User identification number</param>
+        /// <returns>Single AppUser objects</returns>
+        /// <response code="200">Client returned successfully</response>
+        /// <response code="404">Client not found</response>
+        [HttpGet("{userId:long}")]
+        [ODataIgnored]
+        [ProducesResponseType(200), ProducesResponseType(404)]
+        public async Task<ActionResult<AppUser>> GetUser(int userId)
         {
             var user = _userController.GetUser(userId);
 
-            return user;
+            return await user;
         }
-
+        
+        
+        /// <summary>
+        /// This method adds single client
+        /// </summary>
+        /// <param name="appUserDto">AppUserDto object</param>
+        /// <returns>Newly added user identification number</returns>
+        /// <response code="201">Client created successfully</response>
         [HttpPost]
-        public IActionResult AddUser(AppUserDto appUserDto)
+        [ODataIgnored]
+        [ProducesResponseType(201), ProducesResponseType(404)]
+        public async Task<ActionResult<long>> AddUser(AppUserDto appUserDto)
         {
-           var userId = _userController.AddUser(appUserDto);
+           var userId = await _userController.AddUser(appUserDto);
 
-            return Ok(userId);
+            return CreatedAtAction(nameof(AddUser), new {Id = userId});
         }
 
-        [HttpDelete]
-        public IActionResult DeleteUser(int userId)
+        /// <summary>
+        /// This method deletes a single client
+        /// </summary>
+        /// <param name="userId">User identification number</param>
+        /// <returns>Deleted user identification number</returns>
+        /// <response code="200">Client deleted successfully</response>
+        /// <response code="404">Client not found</response>
+        [HttpDelete("{userId:long}")]
+        [ODataIgnored]
+        [ProducesResponseType(200), ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteUser(int userId)
         {
-            _userController.DeleteUser(userId);
+            await _userController.DeleteUser(userId);
             
-            return Ok();
+            return Ok($"User {userId} deleted");
         }
 
-        [HttpPut]
-        public IActionResult UpdateUser(int userId, AppUserDto appUserDto)
+        /// <summary>
+        /// This method updates a single client
+        /// </summary>
+        /// <param name="userId">User identification number</param>
+        /// <param name="appUserDto">AppUserDto object</param>
+        /// <returns>Updated user AppUserDto object</returns>
+        /// <response code="200">Client updated successfully</response>
+        /// <response code="404">Client not found</response>
+        [HttpPut("{userId:long}")]
+        [ODataIgnored]
+        [ProducesResponseType(200), ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateUser(int userId, AppUserDto appUserDto)
         {
-            var user = _userController.UpdateUser(userId, appUserDto);
+            var user = await _userController.UpdateUser(userId, appUserDto);
 
             return Ok(user);
         }
-        
     }
 }
