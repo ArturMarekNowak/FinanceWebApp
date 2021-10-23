@@ -5,6 +5,6 @@ namespace WebApp.Services
 {
     internal interface IParsingService
     {
-        Task DoWork(CancellationToken stoppingToken);
+        Task RequestPrices(CancellationToken stoppingToken);
     }
 }

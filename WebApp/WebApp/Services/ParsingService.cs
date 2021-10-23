@@ -1,28 +1,30 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using WebApp.Helpers;
+using WebApp.Models;
 
 namespace WebApp.Services
 {
     internal class ParsingService : IParsingService
     {
-        private readonly ILogger _logger;
-        private int executionCount;
+        public AppDatabaseContext Context;
 
-        public ParsingService(ILogger<ParsingService> logger)
+        public ParsingService(AppDatabaseContext context)
         {
-            _logger = logger;
+            Context = context;
         }
 
-        public async Task DoWork(CancellationToken stoppingToken)
+        public async Task RequestPrices(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                executionCount++;
-
                 SharedLogger.Logger.LogInformation(
-                    "Scoped Processing Service is working. Count: {Count}", executionCount);
+                    $"Scoped Processing Service is working. {DateTime.Now}");
+
+                Context.Prices.Add(new Price {Value = 123.45, TimeStamp = DateTime.Now});
+                Context.SaveChanges();
 
                 await Task.Delay(10000, stoppingToken);
             }

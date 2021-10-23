@@ -10,29 +10,16 @@ namespace WebApp.Services
 {
     public class ConsumeParsingService : BackgroundService
     {
-        private readonly ILogger<ConsumeParsingService> _logger;
-
-        public ConsumeParsingService(IServiceProvider services,
-            ILogger<ConsumeParsingService> logger)
+        public ConsumeParsingService(IServiceProvider services)
         {
             Services = services;
-            _logger = logger;
         }
 
-        public IServiceProvider Services { get; }
+        private IServiceProvider Services { get; }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            SharedLogger.Logger.LogInformation(
-                "Consume Scoped Service Hosted Service running.");
-
-            await DoWork(stoppingToken);
-        }
-
-        private async Task DoWork(CancellationToken stoppingToken)
-        {
-            SharedLogger.Logger.LogInformation(
-                "Consume Scoped Service Hosted Service is working.");
+            SharedLogger.Logger.LogInformation("Consume Scoped Service Hosted Service running");
 
             using (var scope = Services.CreateScope())
             {
@@ -40,14 +27,13 @@ namespace WebApp.Services
                     scope.ServiceProvider
                         .GetRequiredService<IParsingService>();
 
-                await scopedProcessingService.DoWork(stoppingToken);
+                await scopedProcessingService.RequestPrices(stoppingToken);
             }
         }
 
         public override async Task StopAsync(CancellationToken stoppingToken)
         {
-            SharedLogger.Logger.LogInformation(
-                "Consume Scoped Service Hosted Service is stopping.");
+            SharedLogger.Logger.LogInformation("Consume Scoped Service Hosted Service is stopping");
 
             await base.StopAsync(stoppingToken);
         }

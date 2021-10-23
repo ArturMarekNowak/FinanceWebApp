@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -72,7 +73,7 @@ namespace WebApp
             return exception.ToProblemDetails(context);
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, AppDatabaseContext context)
         {
             app.UseSwagger();
 
@@ -107,6 +108,8 @@ namespace WebApp
 
             loggerFactory.AddFile("Logs/logs.txt");
             SharedLogger.Logger = loggerFactory.CreateLogger("Shared");
+
+            context.Database.Migrate();
         }
 
         public IEdmModel GetEdmModel()
