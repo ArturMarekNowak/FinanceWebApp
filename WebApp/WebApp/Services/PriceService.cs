@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using WebApp.Data;
-using WebApp.Models;
 
 namespace WebApp.Services
 {

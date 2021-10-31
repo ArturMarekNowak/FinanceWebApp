@@ -4,7 +4,7 @@ using WebApp.Helpers;
 
 #nullable disable
 
-namespace WebApp.Models
+namespace WebApp
 {
     public class User
     {
@@ -29,7 +29,7 @@ namespace WebApp.Models
             LastActive = DateTime.Now;
         }
 
-        public long UserId { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

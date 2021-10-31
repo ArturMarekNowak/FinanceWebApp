@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Models;
 
 #nullable disable
 
-namespace WebApp.Data
+namespace WebApp
 {
     public class AppDatabaseContext : DbContext
     {
@@ -26,57 +25,75 @@ namespace WebApp.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlite("Filename=../AppDatabase.db");
+                optionsBuilder.UseNpgsql(
+                    "Host=127.0.0.1;Database=FinanceWebAppDatabase;Username=postgres;Password=postgres");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:Collation", "English_United States.1252");
+
             modelBuilder.Entity<Company>(entity =>
             {
-                entity.HasIndex(e => e.CompanyId, "IX_Companies_CompanyId")
-                    .IsUnique();
+                entity.Property(e => e.CompanyId).UseIdentityAlwaysColumn();
 
-                entity.Property(e => e.Acronym).IsRequired();
+                entity.Property(e => e.Acronym).HasColumnType("character varying");
 
-                entity.Property(e => e.FullName).IsRequired();
+                entity.Property(e => e.FullName).HasColumnType("character varying");
             });
 
             modelBuilder.Entity<Price>(entity =>
             {
-                entity.HasKey(e => new {e.CompanyId, e.PriceId});
+                entity.HasKey(e => new {e.CompanyId, e.PriceId})
+                    .HasName("Prices_pkey");
 
-                entity.Property(e => e.Value).HasColumnName("Price").ValueGeneratedOnAddOrUpdate();
+                entity.HasIndex(e => e.CompanyId, "fki_CompanyId");
 
-                entity.Property(e => e.TimeStamp).IsRequired();
+                entity.Property(e => e.PriceId)
+                    .ValueGeneratedOnAdd()
+                    .UseIdentityAlwaysColumn();
+
+                entity.Property(e => e.TimeStamp).HasColumnType("character varying");
+
+                entity.Property(e => e.Value).HasColumnType("character varying");
 
                 entity.HasOne(d => d.Company)
                     .WithMany(p => p.Prices)
                     .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Prices_CompanyId_fkey");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(e => e.Email, "IX_Users_Email")
-                    .IsUnique();
+                entity.Property(e => e.UserId)
+                    .HasComment("User identication number")
+                    .UseIdentityAlwaysColumn();
 
-                entity.HasIndex(e => e.UserId, "IX_Users_UserId")
-                    .IsUnique();
+                entity.Property(e => e.CreatedAccount)
+                    .IsRequired()
+                    .HasColumnType("character varying");
 
-                entity.Property(e => e.CreatedAccount).IsRequired();
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnType("character varying");
 
-                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnType("character varying");
 
-                entity.Property(e => e.FirstName).IsRequired();
+                entity.Property(e => e.LastActive)
+                    .IsRequired()
+                    .HasColumnType("character varying");
 
-                entity.Property(e => e.LastActive).IsRequired();
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnType("character varying");
 
-                entity.Property(e => e.LastName).IsRequired();
+                entity.Property(e => e.PasswordHash).HasColumnType("character varying");
 
-                entity.Property(e => e.PasswordHash).IsRequired();
-
-                entity.Property(e => e.Salt).IsRequired();
+                entity.Property(e => e.Salt).HasColumnType("character varying");
             });
 
             OnModelCreatingPartial(modelBuilder);

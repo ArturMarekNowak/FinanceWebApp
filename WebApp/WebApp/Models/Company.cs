@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace WebApp.Models
+namespace WebApp
 {
     public class Company
     {
@@ -11,7 +11,7 @@ namespace WebApp.Models
             Prices = new HashSet<Price>();
         }
 
-        public long CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public string Acronym { get; set; }
         public string FullName { get; set; }
 

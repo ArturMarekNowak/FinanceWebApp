@@ -16,10 +16,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
-using WebApp.Data;
 using WebApp.Exceptions;
 using WebApp.Helpers;
-using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp

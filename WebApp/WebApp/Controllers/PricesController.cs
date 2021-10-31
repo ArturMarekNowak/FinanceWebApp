@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApp.Helpers;
-using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers

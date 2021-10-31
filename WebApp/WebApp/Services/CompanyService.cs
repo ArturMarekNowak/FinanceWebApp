@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using WebApp.Data;
 using WebApp.Exceptions;
-using WebApp.Models;
 
 namespace WebApp.Services
 {
