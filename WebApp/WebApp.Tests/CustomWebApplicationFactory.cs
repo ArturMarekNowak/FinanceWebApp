@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApp.Models;
+using WebApp.Data;
 
 namespace TestProject1
 {
     public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup: class
+        : WebApplicationFactory<TStartup> where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {

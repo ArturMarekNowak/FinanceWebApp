@@ -2,7 +2,7 @@
 
 namespace WebApp.Migrations
 {
-    public partial class PriceMigration : Migration
+    public partial class InitialCreate2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

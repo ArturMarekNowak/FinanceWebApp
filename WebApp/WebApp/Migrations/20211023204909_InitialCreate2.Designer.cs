@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApp.Models;
+using WebApp.Data;
 
 namespace WebApp.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    [Migration("20211023145447_PriceMigration2")]
-    partial class PriceMigration2
+    [Migration("20211023204909_InitialCreate2")]
+    partial class InitialCreate2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,13 +34,7 @@ namespace WebApp.Migrations
 
                     b.HasKey("CompanyId");
 
-                    b.HasIndex(new[] { "Acronym" }, "IX_Companies_Acronym")
-                        .IsUnique();
-
                     b.HasIndex(new[] { "CompanyId" }, "IX_Companies_CompanyId")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "FullName" }, "IX_Companies_FullName")
                         .IsUnique();
 
                     b.ToTable("Companies");
@@ -52,14 +46,15 @@ namespace WebApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("PriceId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Value")
-                        .HasColumnType("REAL");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("REAL")
+                        .HasColumnName("Price");
 
                     b.HasKey("CompanyId", "PriceId");
 
@@ -107,6 +102,21 @@ namespace WebApp.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Price", b =>
+                {
+                    b.HasOne("WebApp.Models.Company", "Company")
+                        .WithMany("Prices")
+                        .HasForeignKey("CompanyId")
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("WebApp.Models.Company", b =>
+                {
+                    b.Navigation("Prices");
                 });
 #pragma warning restore 612, 618
         }

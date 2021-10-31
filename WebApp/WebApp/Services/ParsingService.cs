@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using WebApp.Data;
 using WebApp.Helpers;
 using WebApp.Models;
 
@@ -23,7 +24,7 @@ namespace WebApp.Services
                 SharedLogger.Logger.LogInformation(
                     $"Scoped Processing Service is working. {DateTime.Now}");
 
-                Context.Prices.Add(new Price {Value = 123.45, TimeStamp = DateTime.Now});
+                Context.Prices.Add(new Price {CompanyId = 1, Value = 123.45, TimeStamp = DateTime.Now});
                 Context.SaveChanges();
 
                 await Task.Delay(10000, stoppingToken);

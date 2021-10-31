@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Models;
 
 #nullable disable
 
-namespace WebApp.Models
+namespace WebApp.Data
 {
     public class AppDatabaseContext : DbContext
     {
@@ -25,7 +26,7 @@ namespace WebApp.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlite("data source=../AppDatabase.db");
+                optionsBuilder.UseSqlite("Filename=../AppDatabase.db");
             }
         }
 
@@ -33,13 +34,7 @@ namespace WebApp.Models
         {
             modelBuilder.Entity<Company>(entity =>
             {
-                entity.HasIndex(e => e.Acronym, "IX_Companies_Acronym")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.CompanyId, "IX_Companies_CompanyId")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.FullName, "IX_Companies_FullName")
                     .IsUnique();
 
                 entity.Property(e => e.Acronym).IsRequired();
@@ -51,13 +46,14 @@ namespace WebApp.Models
             {
                 entity.HasKey(e => new {e.CompanyId, e.PriceId});
 
-                entity.Property(e => e.PriceId).ValueGeneratedOnAdd();
+                entity.Property(e => e.Value).HasColumnName("Price").ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.TimeStamp).IsRequired();
 
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasColumnType("REAL");
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.Prices)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<User>(entity =>

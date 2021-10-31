@@ -1,4 +1,5 @@
 ﻿using System;
+using WebApp.Data;
 using WebApp.Models;
 
 namespace BaseTests
@@ -19,7 +20,7 @@ namespace BaseTests
                 PasswordHash = "qwerty",
                 UserId = 1
             });
-            
+
             // User for testing DeleteUser
             appDatabaseContext.Users.Add(new User
             {
@@ -32,7 +33,7 @@ namespace BaseTests
                 PasswordHash = "ytrewq",
                 UserId = 2
             });
-            
+
             // User for testing UpdateUser
             appDatabaseContext.Users.Add(new User
             {
