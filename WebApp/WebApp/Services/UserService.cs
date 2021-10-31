@@ -8,9 +8,9 @@ namespace WebApp.Services
 {
     public sealed class UserService : IUserService
     {
-        public AppDatabaseContext _context;
+        public FinanceWebAppDatabaseContext _context;
 
-        public UserService(AppDatabaseContext context)
+        public UserService(FinanceWebAppDatabaseContext context)
         {
             _context = context;
         }

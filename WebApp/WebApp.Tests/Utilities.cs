@@ -5,7 +5,7 @@ namespace BaseTests
 {
     public static class Utilities
     {
-        public static void InitializeDbForTests(AppDatabaseContext appDatabaseContext)
+        public static void InitializeDbForTests(FinanceWebAppDatabaseContext appDatabaseContext)
         {
             // User for testing GetUser
             appDatabaseContext.Users.Add(new User

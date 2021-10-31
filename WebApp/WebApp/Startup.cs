@@ -53,7 +53,7 @@ namespace WebApp
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
 
-            services.AddDbContext<AppDatabaseContext>();
+            services.AddDbContext<FinanceWebAppDatabaseContext>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IPriceService, PriceService>();
@@ -72,7 +72,8 @@ namespace WebApp
             return exception.ToProblemDetails(context);
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, AppDatabaseContext context)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,
+            FinanceWebAppDatabaseContext context)
         {
             app.UseSwagger();
 

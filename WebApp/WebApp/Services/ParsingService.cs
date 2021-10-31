@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -9,9 +8,9 @@ namespace WebApp.Services
 {
     internal class ParsingService : IParsingService
     {
-        public AppDatabaseContext Context;
+        public FinanceWebAppDatabaseContext Context;
 
-        public ParsingService(AppDatabaseContext context)
+        public ParsingService(FinanceWebAppDatabaseContext context)
         {
             Context = context;
         }
@@ -23,12 +22,7 @@ namespace WebApp.Services
                 SharedLogger.Logger.LogInformation(
                     $"Scoped Processing Service is working. {DateTime.Now}");
 
-                //Context.Prices.Add(new Price {Company = Value = 123.45, TimeStamp = DateTime.Now});
-                //Context.Companies.Add(new Company {Acronym = "AAA", FullName = "AAA Company"});
-
-                var company = Context.Companies.FirstOrDefault(c => c.CompanyId == 2);
-
-                company.Prices.Add(new Price {Value = 123.45, TimeStamp = DateTime.Now});
+                //Context.Prices.Add(new Price {CompanyId = 1, Value = 123.45, TimeStamp = DateTime.Now});
 
                 Context.SaveChanges();
 
