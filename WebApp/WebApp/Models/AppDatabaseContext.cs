@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -101,7 +100,7 @@ namespace WebApp
 
         private void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
