@@ -6,7 +6,7 @@ namespace WebApp.Services
 {
     public class CompanyService : ICompanyService
     {
-        public FinanceWebAppDatabaseContext _context;
+        private readonly FinanceWebAppDatabaseContext _context;
 
         public CompanyService(FinanceWebAppDatabaseContext context)
         {
