@@ -6,11 +6,14 @@ import { BrowserRouter } from "react-router-dom";
 
 import './App.css';
 import App from './App';
+import {FavoritesContextProvider} from "./store/favourites-context";
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>, 
+    <FavoritesContextProvider>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    </FavoritesContextProvider>, 
     document.getElementById('root')
 );
 
