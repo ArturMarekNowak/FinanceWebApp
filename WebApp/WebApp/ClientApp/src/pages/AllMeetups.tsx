@@ -9,7 +9,7 @@ function AllMeetupsPage() {
     
     useEffect(() => {
         setIsLoading(true);
-        fetch('https://react-getting-started-90cb5-default-rtdb.europe-west1.firebasedatabase.app/meetups.json')
+        fetch('https://localhost:5001/api/Companies')
             .then(response => {
                 return response.json();
             })
@@ -17,10 +17,12 @@ function AllMeetupsPage() {
                 
             const meetups = [];
 
-                for (const key in data) {
+                for (const key in data["value"]) {
                     const meetup = {
                         id: key, 
-                        ...data[key]
+                        CompanyId: data["value"][key]["CompanyId"],
+                        Acronym: data["value"][key]["Acronym"],
+                        FullName: data["value"][key]["FullName"]
                     };
                     meetups.push(meetup)
                 }
