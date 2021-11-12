@@ -1,38 +1,38 @@
 ﻿import * as React from 'react';
-import MeetupList from "../components/meetups/MeetupList";
+import CompaniesList from "../components/companies/CompaniesList";
 import { useState, useEffect } from "react";
 
-function AllMeetupsPage() {
+function AllCompaniesPage() {
     
-    const [ isLoading, setIsLoading ] = useState(true);
-    const [ loadedMeetups, setLoadedMeetups ] = useState([]);
+    const [ areCompaniesLoading, setAreCompaniesLoading ] = useState(true);
+    const [ loadedCompanies, setLoadedCompanies ] = useState([]);
     
     useEffect(() => {
-        setIsLoading(true);
+        setAreCompaniesLoading(true);
         fetch('https://localhost:5001/api/Companies')
             .then(response => {
                 return response.json();
             })
             .then(data => {
                 
-            const meetups = [];
+            const companies = [];
 
                 for (const key in data["value"]) {
-                    const meetup = {
+                    const company = {
                         id: key, 
                         CompanyId: data["value"][key]["CompanyId"],
                         Acronym: data["value"][key]["Acronym"],
                         FullName: data["value"][key]["FullName"]
                     };
-                    meetups.push(meetup)
+                    companies.push(company)
                 }
                 
-            setIsLoading(false);
-            setLoadedMeetups(meetups);
+            setAreCompaniesLoading(false);
+            setLoadedCompanies(companies);
         });
     }, []);
     
-    if(isLoading)
+    if(areCompaniesLoading)
     {
         return (
           <section>
@@ -43,9 +43,9 @@ function AllMeetupsPage() {
     
     return (
         <section>
-            <MeetupList meetups={loadedMeetups} />
+            <CompaniesList companies={loadedCompanies} />
         </section>
     );
 }
 
-export default AllMeetupsPage
+export default AllCompaniesPage

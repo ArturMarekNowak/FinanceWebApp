@@ -2,10 +2,10 @@
 import { useContext } from 'react';
 
 import Card from '../ui/Card';
-import classes from './MeetupItem.module.css';
+import classes from './CompanyItem.module.css';
 import FavoritesContext from '../../store/favourites-context';
 
-function MeetupItem(props) {
+function CompanyItem(props) {
     console.log(props)
     const favoritesCtx = useContext(FavoritesContext);
 
@@ -43,4 +43,4 @@ function MeetupItem(props) {
     );
 }
 
-export default MeetupItem;
+export default CompanyItem;

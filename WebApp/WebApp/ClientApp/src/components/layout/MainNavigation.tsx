@@ -14,14 +14,14 @@ function MainNavigation() {
             <div className={classes.logo}>
                 <ul>
                     <li>
-                        <Link to={'/'}>FinanceWebApp</Link>
+                        <Link to={'/companies'}>FinanceWebApp</Link>
                     </li>
                 </ul>
             </div>
             <nav>
                 <ul>
                     <li>
-                        <Link to={'/'}>All companies</Link>
+                        <Link to={'/companies'}>All companies</Link>
                     </li>
                     <li>
                         <Link to={'/favourites'}>

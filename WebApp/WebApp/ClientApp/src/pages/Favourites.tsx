@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from "react";
 import FavoritesContext from "../store/favourites-context";
-import MeetupList from "../components/meetups/MeetupList";
+import CompanyList from "../components/companies/CompaniesList";
 
 function FavouritesPage() {
     const favouritesCtx = useContext(FavoritesContext);
@@ -13,7 +13,7 @@ function FavouritesPage() {
     }
     else
     {
-        content = <MeetupList meetups={favouritesCtx.favorites} />
+        content = <CompanyList companies={favouritesCtx.favorites} />
     }
     
     return (
