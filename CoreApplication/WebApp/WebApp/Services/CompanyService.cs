@@ -1,35 +1,32 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.OData.Query;
 using WebApp.Exceptions;
-using WebApp.Models;
 
 namespace WebApp.Services
 {
     public class CompanyService : ICompanyService
     {
-        public AppDatabaseContext _context;
-        
-        public CompanyService(AppDatabaseContext context)
+        private readonly FinanceWebAppDatabaseContext _context;
+
+        public CompanyService(FinanceWebAppDatabaseContext context)
         {
             _context = context;
         }
-        
-        /// <inheritdoc/>
+
+        /// <inheritdoc />
         public IQueryable<Company> GetAllCompanies()
         {
             return _context.Companies.AsQueryable();
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public async Task<Company> GetCompany(int companyId)
         {
             var user = _context.Companies.FirstOrDefault(u => u.CompanyId == companyId);
 
             if (user is null)
                 throw new NotFoundException($"User with Id {companyId} does not exist");
-                
+
             return await Task.FromResult(user);
         }
     }

@@ -1,13 +1,12 @@
 ﻿using System.Linq;
-using WebApp.Models;
 
 namespace WebApp.Services
 {
     public class PriceService : IPriceService
     {
-        public AppDatabaseContext _context;
+        public FinanceWebAppDatabaseContext _context;
 
-        public PriceService(AppDatabaseContext context)
+        public PriceService(FinanceWebAppDatabaseContext context)
         {
             _context = context;
         }

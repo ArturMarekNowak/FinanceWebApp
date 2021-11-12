@@ -1,11 +1,11 @@
 ﻿using System;
-using WebApp.Models;
+using WebApp;
 
 namespace BaseTests
 {
     public static class Utilities
     {
-        public static void InitializeDbForTests(AppDatabaseContext appDatabaseContext)
+        public static void InitializeDbForTests(FinanceWebAppDatabaseContext appDatabaseContext)
         {
             // User for testing GetUser
             appDatabaseContext.Users.Add(new User
@@ -19,7 +19,7 @@ namespace BaseTests
                 PasswordHash = "qwerty",
                 UserId = 1
             });
-            
+
             // User for testing DeleteUser
             appDatabaseContext.Users.Add(new User
             {
@@ -32,7 +32,7 @@ namespace BaseTests
                 PasswordHash = "ytrewq",
                 UserId = 2
             });
-            
+
             // User for testing UpdateUser
             appDatabaseContext.Users.Add(new User
             {

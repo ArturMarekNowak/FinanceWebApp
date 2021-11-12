@@ -1,20 +1,19 @@
 import * as React from 'react';
-import { Route } from 'react-router';
-import Layout from './components/NavMenu/Layout';
-import Home from './components/Home/Home';
-import Counter from './components/Home/Counter';
-import FetchData from './components/Home/FetchData';
-import Login from './components/Home/Login';
-import Register from './components/Home/Register';
+import {Route, Switch} from "react-router";
 
-import './custom.css'
+import AllCompaniesPage from "./pages/AllCompanies";
+import FavouritesPage from "./pages/Favourites";
+import Layout from "./components/layout/Layout";
 
-export default () => (
-    <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/Home/counter' component={Counter} />
-        <Route path='/Home/fetch-data/:startDateIndex?' component={FetchData} />
-        <Route path='/Home/login' component={Login} />
-        <Route path='/Home/register' component={Register} />
-    </Layout>
-);
+function App() {
+   return(
+     <Layout>
+         <Switch>
+             <Route path={'/companies'} component={AllCompaniesPage} />
+             <Route path={'/favourites'} component={FavouritesPage} />
+         </Switch>
+     </Layout>  
+   );
+}
+
+export default App;

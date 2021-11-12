@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApp.Models;
+using WebApp;
 
 namespace TestProject1
 {
     public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup: class
+        : WebApplicationFactory<TStartup> where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -19,11 +19,11 @@ namespace TestProject1
             {
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
-                         typeof(DbContextOptions<AppDatabaseContext>));
+                         typeof(DbContextOptions<FinanceWebAppDatabaseContext>));
 
                 services.Remove(descriptor);
 
-                services.AddDbContext<AppDatabaseContext>(options =>
+                services.AddDbContext<FinanceWebAppDatabaseContext>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryDbForTesting");
                 });
@@ -33,7 +33,7 @@ namespace TestProject1
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<AppDatabaseContext>();
+                    var db = scopedServices.GetRequiredService<FinanceWebAppDatabaseContext>();
                     var logger = scopedServices
                         .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 

@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
-namespace WebApp.Models
+namespace WebApp
 {
-    public sealed class Price
+    public class Price
     {
-        public long CompanyId { get; set; }
-        
-        public long PriceId { get; set; }
-        
-        public string TimeStamp { get; set; }
-        
+        [Key] public long CompanyId { get; set; }
+
+        [Key] public DateTime TimeStamp { get; set; }
+
         public double Value { get; set; }
+
+        public virtual Company Company { get; set; }
     }
 }
