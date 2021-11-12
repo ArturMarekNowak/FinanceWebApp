@@ -1,15 +1,14 @@
 ﻿.header {
     width: 100%;
-    height: 5rem;
+    height: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #77002e;
+    background-color: #00b140;
     padding: 0 10%;
 }
 
 .logo {
-    font-size: 2rem;
     color: white;
     font-weight: bold;
 }
@@ -28,20 +27,21 @@
 
 .header a {
     text-decoration: none;
-    font-size: 1.5rem;
-    color: #fcb8d2;
+    font-size: 1.25rem;
+    font-family: Roboto,Arial,Helvetica,sans-serif;
+    color: white;
 }
 
 .header a:hover,
 .header a:active,
 .header a.active {
-    color: white;
+    color: silver;
 }
 
 .badge {
-    background-color: #cc2062;
+    background-color: greenyellow;
     color: white;
-    border-radius: 12px;
+    border-radius: 6px;
     padding: 0 1rem;
-    margin-left: 0.5rem;
+    margin-left: 0.3rem;
 }

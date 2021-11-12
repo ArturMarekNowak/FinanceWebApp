@@ -11,14 +11,17 @@ function MainNavigation() {
     
     return (
         <header className={classes.header}>
-            <div className={classes.logo}>React Meetups</div>
+            <div className={classes.logo}>
+                <ul>
+                    <li>
+                        <Link to={'/'}>FinanceWebApp</Link>
+                    </li>
+                </ul>
+            </div>
             <nav>
                 <ul>
                     <li>
-                        <Link to={'/'}>All Meetups</Link>
-                    </li>
-                    <li>
-                        <Link to={'/new-meetup'}>New Meetup</Link>
+                        <Link to={'/'}>All companies</Link>
                     </li>
                     <li>
                         <Link to={'/favourites'}>

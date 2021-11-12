@@ -41,7 +41,6 @@ function AllMeetupsPage() {
     
     return (
         <section>
-            <h1>AllMeetupsPage</h1>
             <MeetupList meetups={loadedMeetups} />
         </section>
     );
