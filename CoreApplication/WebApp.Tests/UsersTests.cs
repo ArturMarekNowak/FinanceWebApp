@@ -10,7 +10,7 @@ namespace BaseTests
         [Test]
         public void GetAllUsers_Ok()
         {
-            var response = _client.GetAsync("api/Users").Result;
+            var response = Client.GetAsync("api/Users").Result;
             
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -18,7 +18,7 @@ namespace BaseTests
         [Test]
         public void AddUser_Created()
         {
-            var response = _client.PostAsJsonAsync("api/Users", new NewUser
+            var response = Client.PostAsJsonAsync("api/Users", new NewUser
             {
                 Email = "ghi@mail.com", 
                 FirstName = "John", 
@@ -32,7 +32,7 @@ namespace BaseTests
         [Test]
         public void AddUser_BadRequest_EmailIsAlreadyInDatabase()
         {
-            var response = _client.PostAsJsonAsync("api/Users", new NewUser
+            var response = Client.PostAsJsonAsync("api/Users", new NewUser
             {
                 Email = "abc@mail.com", 
                 FirstName = "John", 
@@ -46,7 +46,7 @@ namespace BaseTests
         [Test]
         public void GetUser_Ok()
         {
-            var response = _client.GetAsync("api/Users/1").Result;
+            var response = Client.GetAsync("api/Users/1").Result;
             
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -54,7 +54,7 @@ namespace BaseTests
         [Test]
         public void GetUser_BadRequest_WrongId()
         {
-            var response = _client.GetAsync("api/Users/-1234").Result;
+            var response = Client.GetAsync("api/Users/-1234").Result;
             
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -62,7 +62,7 @@ namespace BaseTests
         [Test]
         public void DeleteUser_BadRequest_WrongId()
         {
-            var response = _client.DeleteAsync("api/Users/-1234").Result;
+            var response = Client.DeleteAsync("api/Users/-1234").Result;
             
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -70,7 +70,7 @@ namespace BaseTests
         [Test]
         public void DeleteUser_Ok()
         {
-            var response = _client.DeleteAsync("api/Users/2").Result;
+            var response = Client.DeleteAsync("api/Users/2").Result;
             
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -78,7 +78,7 @@ namespace BaseTests
         [Test]
         public void UpdateUser_Ok()
         {
-            var response = _client.PutAsJsonAsync("api/Users/3", new NewUser
+            var response = Client.PutAsJsonAsync("api/Users/3", new NewUser
             {
                 Email = "xyz@mail.com", 
                 FirstName = "John", 
@@ -92,7 +92,7 @@ namespace BaseTests
         [Test]
         public void UpdateUser_BadRequest_WrongId()
         {
-            var response = _client.PutAsJsonAsync("api/Users/12345678", new NewUser
+            var response = Client.PutAsJsonAsync("api/Users/12345678", new NewUser
             {
                 Email = "abcdef@mail.com", 
                 FirstName = "John", 

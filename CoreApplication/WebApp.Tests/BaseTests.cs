@@ -7,14 +7,14 @@ namespace BaseTests
 {
     public class BaseTests
     {
-        protected HttpClient _client;
-        protected CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
+        protected HttpClient Client;
+        private CustomWebApplicationFactory<Startup> _customWebApplicationFactory;
         
         [OneTimeSetUp]
         public void Setup()
         {
             _customWebApplicationFactory = new CustomWebApplicationFactory<Startup>();
-            _client = _customWebApplicationFactory.CreateClient();
+            Client = _customWebApplicationFactory.CreateClient();
         }
     }
 }
