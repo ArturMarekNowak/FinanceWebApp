@@ -57,7 +57,7 @@ There will be more here, stay tuned!
 ## Features
 For now application does not posses many impressive features. Fully functioning is simple API and communication with database.
 
-##To-do list:
+## To-do list:
 * Retrieval of prices from mock application
 * Display of prices on frontend charts
 * Implementation of toastr library
