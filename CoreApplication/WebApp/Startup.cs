@@ -24,13 +24,11 @@ namespace WebApp
 {
     public sealed class Startup
     {
-        private readonly IWebHostEnvironment _env;
         private IConfiguration _configuration;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
-            _env = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -72,14 +70,14 @@ namespace WebApp
             return exception.ToProblemDetails(context);
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IWebHostEnvironment env,
             FinanceWebAppDatabaseContext context)
         {
             app.UseSwagger();
 
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            if (_env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseExceptionHandler("/error-local-development");
             }
@@ -103,13 +101,11 @@ namespace WebApp
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (_env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
+                if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
 
             loggerFactory.AddFile("Logs/logs.txt");
             SharedLogger.Logger = loggerFactory.CreateLogger("Shared");
-
-            context.Database.Migrate();
         }
 
         public IEdmModel GetEdmModel()
