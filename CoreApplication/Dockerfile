@@ -1,33 +1,30 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS base
-WORKDIR /WebApp
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
 EXPOSE 80
+EXPOSE 443
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
 
-
-# https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /source
-
-# copy csproj and restore as distinct layers
-COPY *.sln .
-COPY WebApp/*.csproj ./WebApp/
-COPY WebApp.Tests/*.csproj ./WebApp.Tests/
-RUN dotnet restore
-
-# copy everything else and build app
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+WORKDIR /src
+COPY ["WebApp/WebApp.csproj", "WebApp/"]
+RUN dotnet restore "WebApp/WebApp.csproj"
 COPY . .
-WORKDIR /source/WebApp
-
-WORKDIR /source/WebApp
-RUN dotnet build -c Release -o /WebApp
-
-WORKDIR /source/WebApp.Tests
-RUN dotnet build -c Release -o /WebApp
+WORKDIR "/src/WebApp"
+RUN dotnet build "WebApp.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /WebApp
+RUN dotnet publish "WebApp.csproj" -c Release -o /app/publish
 
-# final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /WebApp
-COPY --from=build /WebApp ./
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "WebApp.dll"]
