@@ -17,8 +17,8 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ../../CoreApplication/WebApp/WebApp.csproj
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ../../CoreApplication/WebApp/WebApp.csproj --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test ../../CoreApplication/WebApp.Tests/WebApp.Tests.csproj --no-restore --verbosity normal
