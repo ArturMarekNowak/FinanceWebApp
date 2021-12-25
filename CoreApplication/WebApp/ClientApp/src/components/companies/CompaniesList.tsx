@@ -2,7 +2,8 @@
 import CompanyItem from './CompanyItem';
 import classes from './CompaniesList.module.css';
 
-function CompaniesList(props) {
+
+function CompaniesList(props: { companies: { map: (arg0: (company: any) => JSX.Element) => React.ReactNode; }; }) {
     return (
         <ul className={classes.list}>
             {props.companies.map((company) => (

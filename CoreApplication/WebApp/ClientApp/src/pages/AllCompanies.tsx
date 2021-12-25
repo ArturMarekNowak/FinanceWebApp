@@ -9,7 +9,7 @@ function AllCompaniesPage() {
     
     useEffect(() => {
         setAreCompaniesLoading(true);
-        fetch('https://localhost:44347/api/Companies')
+        fetch('http://localhost:8080/api/Companies')
             .then(response => {
                 return response.json();
             })
@@ -28,7 +28,8 @@ function AllCompaniesPage() {
                 }
                 
             setAreCompaniesLoading(false);
-            setLoadedCompanies(companies);
+            // @ts-ignore
+                setLoadedCompanies(companies);
         });
     }, []);
     
