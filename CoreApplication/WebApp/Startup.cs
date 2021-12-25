@@ -88,7 +88,7 @@ namespace WebApp
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseProblemDetails();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
