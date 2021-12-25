@@ -1,6 +1,8 @@
 # Finance Web Application
 The idea of this is to make an application with mocked stock market informations to it's users.
 
+![example workflow](https://github.com/ArturMarekNowak/FinanceWebApp/actions/workflows/workflow.yml/badge.svg)
+
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
