@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebApp.Helpers;
 
-#nullable disable
-
 namespace WebApp
 {
-    public class User
+    public partial class User
     {
         public User()
         {
@@ -28,8 +27,11 @@ namespace WebApp
             CreatedAccount = DateTime.Now;
             LastActive = DateTime.Now;
         }
-
-        public long UserId { get; set; }
+        
+        /// <summary>
+        /// User identication number
+        /// </summary>
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

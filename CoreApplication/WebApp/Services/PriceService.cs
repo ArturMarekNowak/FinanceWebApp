@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApp.Services
 {
@@ -14,7 +15,7 @@ namespace WebApp.Services
         /// <inheritdoc />
         public IQueryable<Price> GetAllPrices()
         {
-            return _context.Prices.AsQueryable();
+            return new List<Price>().AsQueryable();
         }
     }
 }
