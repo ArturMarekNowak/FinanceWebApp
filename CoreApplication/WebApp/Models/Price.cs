@@ -1,18 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-#nullable disable
+using System.Collections.Generic;
 
 namespace WebApp
 {
-    public class Price
+    public partial class Price
     {
-        [Key] public long CompanyId { get; set; }
-
-        [Key] public DateTime TimeStamp { get; set; }
-
-        public double Value { get; set; }
-
-        public virtual Company Company { get; set; }
+        public int PriceId { get; set; }
+        public string TimeStamp { get; set; }
+        public string Value { get; set; }
     }
 }
