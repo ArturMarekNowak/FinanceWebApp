@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApp.Helpers;
 using WebApp.Models;
@@ -23,11 +24,12 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        ///     This method retrieves all companies registered on application
+        ///     This method retrieves all currencies registered on application
         /// </summary>
-        /// <returns>List of Company objects</returns>
-        /// <response code="200">Company list returned successfully</response>
+        /// <returns>List of Currency objects</returns>
+        /// <response code="200">Currency list returned successfully</response>
         [HttpGet]
+        [ODataAttributeRouting]
         [EnableQuery(PageSize = 100)]
         [ProducesResponseType(200)]
         public ActionResult<IQueryable<Currency>> GetAllCurrencies()
@@ -40,16 +42,16 @@ namespace WebApp.Controllers
         /// <summary>
         ///     This method retrieves single client
         /// </summary>
-        /// <param name="companyId">Company identification number</param>
-        /// <returns>Single Company objects</returns>
-        /// <response code="200">Company returned successfully</response>
-        /// <response code="404">Company not found</response>
-        [HttpGet("{companyId:long}")]
+        /// <param name="currencyId">Currency identification number</param>
+        /// <returns>Single Currency objects</returns>
+        /// <response code="200">Currency returned successfully</response>
+        /// <response code="404">Currency not found</response>
+        [HttpGet("{currencyId:long}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Currency>> GetCurrency(int companyId)
+        public async Task<ActionResult<Currency>> GetCurrency(int currencyId)
         {
-            var currency = await _currenciesController.GetCurrency(companyId);
+            var currency = await _currenciesController.GetCurrency(currencyId);
 
             return Ok(currency);
         }

@@ -2,7 +2,7 @@
 
 namespace BaseTests
 {
-    public class CompaniesTests : BaseTests
+    public class CurrenciesTests : BaseTests
     {
         [Test]
         public void Test1()

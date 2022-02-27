@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 
 namespace WebApp.Models
 {
@@ -9,7 +11,6 @@ namespace WebApp.Models
         /// <summary>
         /// Price identification number
         /// </summary>
-        [JsonIgnore]
         public int PriceId { get; set; }
         
         /// <summary>
@@ -41,7 +42,7 @@ namespace WebApp.Models
         /// Volume at timestamp
         /// </summary>
         public double Volume { get; set; }
-       
+ 
         /// <summary>
         /// Foreign key property
         /// </summary>

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { useContext } from "react";
 import FavoritesContext from "../store/favourites-context";
-import CompanyList from "../components/companies/CompaniesList";
+import CurrenciesList from "../components/currencies/CurrenciesList";
 
 function FavouritesPage() {
     const favouritesCtx = useContext(FavoritesContext);
    
     let content;
     
-    if(favouritesCtx.totalFavorites == 0) {
+    if(favouritesCtx.totalFavorites === 0) {
         content = <p>You have got no favourties yet</p>
     }
     else
     {
-        content = <CompanyList companies={favouritesCtx.favorites} />
+        content = <CurrenciesList currencies={favouritesCtx.favorites} />
     }
     
     return (

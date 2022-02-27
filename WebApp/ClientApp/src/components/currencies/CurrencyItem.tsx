@@ -4,10 +4,10 @@ import * as React from 'react';
 import { useContext } from 'react';
 
 import Card from '../ui/Card';
-import classes from './CompanyItem.module.css';
+import classes from './CurrencyItem.module.css';
 import FavoritesContext from '../../store/favourites-context';
 
-function CompanyItem(props: { id: any; CompanyId: any; Acronym: React.ReactNode; FullName: React.ReactNode; }) {
+function CurrencyItem(props: { id: any; DisplaySymbol: React.ReactNode; Symbol: React.ReactNode; Description: React.ReactNode}) {
     console.log(props)
     const favoritesCtx = useContext(FavoritesContext);
 
@@ -20,9 +20,9 @@ function CompanyItem(props: { id: any; CompanyId: any; Acronym: React.ReactNode;
         } else {
             favoritesCtx.addFavorite({
                 id: props.id,
-                CompanyId: props.CompanyId,
-                Acronym: props.Acronym,
-                FullName: props.FullName
+                DisplaySymbol: props.DisplaySymbol,
+                Symbol: props.Symbol,
+                Description: props.Description
             });
         }
     }
@@ -34,8 +34,8 @@ function CompanyItem(props: { id: any; CompanyId: any; Acronym: React.ReactNode;
             <li className={classes.item}>
                 <Card>
                     <div className={classes.content}>
-                        <h3>{props.Acronym}</h3>
-                        <p>{props.FullName}</p>
+                        <h3>{props.Symbol}</h3>
+                        <p>{props.DisplaySymbol}</p>
                     </div>
                     <div className={classes.actions}>
                         <button>Details</button>
@@ -52,8 +52,8 @@ function CompanyItem(props: { id: any; CompanyId: any; Acronym: React.ReactNode;
             <li className={classes.item}>
                 <Card>
                     <div className={classes.content}>
-                        <h3>{props.Acronym}</h3>
-                        <p>{props.FullName}</p>
+                        <h3>{props.Symbol}</h3>
+                        <p>{props.DisplaySymbol}</p>
                     </div>
                     <div className={classes.actions}>
                         <button>Details</button>
@@ -68,4 +68,4 @@ function CompanyItem(props: { id: any; CompanyId: any; Acronym: React.ReactNode;
     }
 }
 
-export default CompanyItem;
+export default CurrencyItem;

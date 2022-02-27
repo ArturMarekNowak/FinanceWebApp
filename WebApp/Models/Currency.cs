@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace WebApp.Models
@@ -8,9 +9,8 @@ namespace WebApp.Models
         /// <summary>
         /// Currency identification number 
         /// </summary>
-        [JsonIgnore]
         public int CurrencyId { get; set; }
-        
+      
         /// <summary>
         /// Currency symbol for display
         /// </summary>
