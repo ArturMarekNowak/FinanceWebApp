@@ -15,8 +15,8 @@ namespace WebApp.Models
         }
 
         public virtual DbSet<Currency> Currencies { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-
+       
+        public virtual DbSet<Price> Prices { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -28,133 +28,94 @@ namespace WebApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("WebApp.Models.Currency", b =>
-                {
-                    b.Property<int>("CurrencyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CurrencyId"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DisplaySymbol")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Symbol")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("CurrencyId");
-
-                    b.ToTable("Currencies");
-                });
-
-            modelBuilder.Entity("WebApp.Models.Price", b =>
-                {
-                    b.Property<int>("PriceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PriceId"));
-
-                    b.Property<decimal?>("ClosingPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<int?>("CurrencyId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal?>("HighestPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal?>("LowestPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal?>("OpeningPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("TimeStamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("Volume")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("PriceId");
-
-                    b.HasIndex("CurrencyId");
-
-                    b.ToTable("Price");
-                });
-
-            modelBuilder.Entity("WebApp.Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
-
-                    b.Property<DateTimeOffset>("CreatedAccount")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("LastActive")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Salt")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("WebApp.Models.Price", b =>
-                {
-                    b.HasOne("WebApp.Models.Currency", null)
-                        .WithMany("Prices")
-                        .HasForeignKey("CurrencyId");
-                });
-
-            modelBuilder.Entity("WebApp.Models.Currency", b =>
-                {
-                    b.Navigation("Prices");
-                });
-#pragma warning restore 612, 618
+ #pragma warning disable 612, 618
+             modelBuilder
+                 .HasAnnotation("ProductVersion", "6.0.2")
+                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
  
+             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+ 
+             modelBuilder.Entity("WebApp.Models.Currency", b =>
+                 {
+                     b.Property<int>("CurrencyId")
+                         .ValueGeneratedOnAdd()
+                         .HasColumnType("integer");
+ 
+                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CurrencyId"));
+ 
+                     b.Property<string>("Description")
+                         .IsRequired()
+                         .HasColumnType("text");
+ 
+                     b.Property<string>("DisplaySymbol")
+                         .IsRequired()
+                         .HasColumnType("text");
+ 
+                     b.Property<string>("Symbol")
+                         .IsRequired()
+                         .HasColumnType("text");
+ 
+                     b.HasKey("CurrencyId");
+ 
+                     b.ToTable("Currencies");
+                 });
+ 
+             modelBuilder.Entity("WebApp.Models.Price", b =>
+                 {
+                     b.Property<int>("PriceId")
+                         .ValueGeneratedOnAdd()
+                         .HasColumnType("integer");
+ 
+                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PriceId"));
+ 
+                     b.Property<decimal>("ClosingPrice")
+                         .HasColumnType("numeric");
+ 
+                     b.Property<int>("CurrencyId")
+                         .HasColumnType("integer");
+ 
+                     b.Property<decimal>("HighestPrice")
+                         .HasColumnType("numeric");
+ 
+                     b.Property<decimal>("LowestPrice")
+                         .HasColumnType("numeric");
+ 
+                     b.Property<decimal>("OpeningPrice")
+                         .HasColumnType("numeric");
+ 
+                     b.Property<long>("TimeStamp")
+                         .HasColumnType("bigint");
+ 
+                     b.Property<double>("Volume")
+                         .HasColumnType("double precision");
+ 
+                     b.HasKey("PriceId");
+ 
+                     b.HasIndex("CurrencyId");
+ 
+                     b.ToTable("Prices");
+                 });
+ 
+             modelBuilder.Entity("WebApp.Models.Price", b =>
+                 {
+                     b.HasOne("WebApp.Models.Currency", "Currency")
+                         .WithMany("Prices")
+                         .HasForeignKey("CurrencyId")
+                         .OnDelete(DeleteBehavior.Cascade)
+                         .IsRequired();
+ 
+                     b.Navigation("Currency");
+                 });
+ 
+             modelBuilder.Entity("WebApp.Models.Currency", b =>
+                 {
+                     b.Navigation("Prices");
+                 });
+ #pragma warning restore 612, 618
+            
             OnModelCreatingPartial(modelBuilder);
         }
-
+        
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

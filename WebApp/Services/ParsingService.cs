@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -11,21 +13,22 @@ namespace WebApp.Services
 {
     internal class ParsingService : IParsingService
     {
-        public FinanceWebAppDatabaseContext Context;
+        public FinanceWebAppDatabaseContext _context;
 
         public ParsingService(FinanceWebAppDatabaseContext context)
         {
-            Context = context;
+            _context = context;
         }
 
         public async Task RequestPrices(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                           
+                
                 SharedLogger.Logger.LogInformation(
                     $"Scoped Processing Service is working. {DateTime.Now}");
                 
-                await Context.SaveChangesAsync(stoppingToken);
 
                 await Task.Delay(10000, stoppingToken);
             }

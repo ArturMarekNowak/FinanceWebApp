@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 using WebApp.Services.Interfaces;
 
@@ -15,9 +17,11 @@ namespace WebApp.Services
         }
 
         /// <inheritdoc />
-        public IQueryable<Price> GetAllPrices()
+        public IQueryable<Price> GetAllPrices(string symbol)
         {
-            return new List<Price>().AsQueryable();
+            var c = _context.Currencies.Include(c => c.Prices).FirstOrDefault(c => c.Symbol == symbol);
+            
+            return c.Prices.AsQueryable();
         }
     }
 }

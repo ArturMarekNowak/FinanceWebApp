@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Exceptions;
 using WebApp.Models;
 using WebApp.Services.Interfaces;
@@ -8,7 +12,7 @@ namespace WebApp.Services
 {
     public class CurrenciesService : ICurrenciesService
     {
-        private readonly FinanceWebAppDatabaseContext _context;
+        private FinanceWebAppDatabaseContext _context;
 
         public CurrenciesService(FinanceWebAppDatabaseContext context)
         {

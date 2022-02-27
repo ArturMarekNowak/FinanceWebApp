@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApp.Helpers;
 using WebApp.Models;
-using WebApp.Services;
 using WebApp.Services.Interfaces;
 
 namespace WebApp.Controllers
 {
     [ApiController]
     [ActionsFilter]
-    [Route("api/Companies")]
+    [Route("api/Currencies")]
     [ApiExplorerSettings(IgnoreApi = false)]
-    public sealed class CurrenciesController : ODataController
+    public sealed class CurrenciesController : Controller
     {
         private readonly ICurrenciesService _currenciesController;
 
@@ -52,7 +51,7 @@ namespace WebApp.Controllers
         {
             var currency = await _currenciesController.GetCurrency(companyId);
 
-            return currency;
+            return Ok(currency);
         }
     }
 }

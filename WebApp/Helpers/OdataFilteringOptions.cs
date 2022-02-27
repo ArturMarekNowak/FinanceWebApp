@@ -10,8 +10,8 @@ namespace WebApp.Helpers
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor &&
-                (descriptor.ControllerName.Equals("Users") || descriptor.ControllerName.Equals("Companies") ||
-                 descriptor.ControllerName.Equals("Prices")) && descriptor.ActionName.StartsWith("GetAll"))
+                (descriptor.ControllerName.Equals("Currencies") || descriptor.ControllerName.Equals("Prices")) 
+                && descriptor.ActionName.StartsWith("GetAll"))
             {
                 Dictionary<string, string> parameters = new()
                 {
@@ -21,7 +21,6 @@ namespace WebApp.Helpers
                     {"$select", "Specifies a subset of properties to return"},
                     {"$orderby", "Determines what values are used to order a collection of records"}
                 };
-                operation.Parameters = new List<OpenApiParameter>();
 
                 foreach (var pair in parameters)
                     operation.Parameters.Add(new OpenApiParameter
@@ -31,6 +30,7 @@ namespace WebApp.Helpers
                         Description = pair.Value,
                         In = new ParameterLocation()
                     });
+                
             }
         }
     }
