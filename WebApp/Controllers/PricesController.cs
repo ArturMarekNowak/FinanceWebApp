@@ -12,7 +12,7 @@ namespace WebApp.Controllers
     [ActionsFilter]
     [Route("api/Prices")]
     [ApiExplorerSettings(IgnoreApi = false)]
-    public sealed class PricesController : ODataController
+    public sealed class PricesController : Controller
     {
         private readonly IPriceService _pricesService;
 
@@ -29,9 +29,9 @@ namespace WebApp.Controllers
         [HttpGet]
         [EnableQuery(PageSize = 100)]
         [ProducesResponseType(200)]
-        public ActionResult<IQueryable<Price>> GetAllPrices()
+        public ActionResult<IQueryable<Price>> GetAllPrices(string symbol)
         {
-            var prices = _pricesService.GetAllPrices();
+            var prices = _pricesService.GetAllPrices(symbol);
 
             return Ok(prices);
         }

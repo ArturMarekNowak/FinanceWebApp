@@ -8,6 +8,7 @@ namespace WebApp.Models
         /// <summary>
         /// Currency identification number 
         /// </summary>
+        [JsonIgnore]
         public int CurrencyId { get; set; }
         
         /// <summary>

@@ -9,6 +9,7 @@ namespace WebApp.Models
         /// <summary>
         /// Price identification number
         /// </summary>
+        [JsonIgnore]
         public int PriceId { get; set; }
         
         /// <summary>
@@ -50,6 +51,7 @@ namespace WebApp.Models
         /// <summary>
         /// Reference navigation property
         /// </summary>
+        [JsonIgnore]
         public Currency Currency { get; set; }
     }
 }

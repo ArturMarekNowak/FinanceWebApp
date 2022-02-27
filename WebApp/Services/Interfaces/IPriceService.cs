@@ -5,6 +5,6 @@ namespace WebApp.Services.Interfaces
 {
     public interface IPriceService
     {
-        IQueryable<Price> GetAllPrices();
+        IQueryable<Price> GetAllPrices(string symbol);
     }
 }

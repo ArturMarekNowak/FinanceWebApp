@@ -13,7 +13,7 @@ namespace WebApp.Controllers
     [ActionsFilter]
     [Route("api/Currencies")]
     [ApiExplorerSettings(IgnoreApi = false)]
-    public sealed class CurrenciesController : ODataController
+    public sealed class CurrenciesController : Controller
     {
         private readonly ICurrenciesService _currenciesController;
 
