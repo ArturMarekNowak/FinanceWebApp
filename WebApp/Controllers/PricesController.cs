@@ -1,11 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApp.Helpers;
 using WebApp.Models;
-using WebApp.Services;
 using WebApp.Services.Interfaces;
 
 namespace WebApp.Controllers
@@ -16,11 +14,11 @@ namespace WebApp.Controllers
     [ApiExplorerSettings(IgnoreApi = false)]
     public sealed class PricesController : ODataController
     {
-        private readonly IPriceService _priceController;
+        private readonly IPriceService _pricesService;
 
-        public PricesController(IPriceService priceController)
+        public PricesController(IPriceService pricesService)
         {
-            _priceController = priceController;
+            _pricesService = pricesService;
         }
 
         /// <summary>
@@ -33,7 +31,7 @@ namespace WebApp.Controllers
         [ProducesResponseType(200)]
         public ActionResult<IQueryable<Price>> GetAllPrices()
         {
-            var prices = _priceController.GetAllPrices();
+            var prices = _pricesService.GetAllPrices();
 
             return Ok(prices);
         }

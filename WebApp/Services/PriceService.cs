@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using WebApp.Models;
 using WebApp.Services.Interfaces;
 
@@ -17,7 +18,7 @@ namespace WebApp.Services
         /// <inheritdoc />
         public IQueryable<Price> GetAllPrices()
         {
-            return new List<Price>().AsQueryable();
+            return _context.Prices.AsQueryable();
         }
     }
 }

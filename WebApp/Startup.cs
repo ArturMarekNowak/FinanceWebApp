@@ -54,7 +54,6 @@ namespace WebApp
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
 
             services.AddDbContext<FinanceWebAppDatabaseContext>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICurrenciesService, CurrenciesService>();
             services.AddScoped<IPriceService, PriceService>();
             services.AddHostedService<ConsumeParsingService>();
@@ -113,7 +112,6 @@ namespace WebApp
         public IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<User>("Users");
             builder.EntitySet<Currency>("Companies");
             builder.EntitySet<Price>("Prices");
             return builder.GetEdmModel();

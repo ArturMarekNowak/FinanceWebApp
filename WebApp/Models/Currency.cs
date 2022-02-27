@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebApp.Models
 {
@@ -23,10 +24,11 @@ namespace WebApp.Models
         /// Currency description
         /// </summary>
         public string Description { get; set; }
-        
+
         /// <summary>
         /// Collection of currency prices
         /// </summary>
-        public List<Price> Prices { get; set; }
+        [JsonIgnore]
+        public List<Price> Prices { get; set; } = new();
     }
 }
