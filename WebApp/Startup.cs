@@ -112,7 +112,7 @@ namespace WebApp
         public IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Currency>("Companies");
+            builder.EntitySet<Currency>("Currencies");
             builder.EntitySet<Price>("Prices");
             return builder.GetEdmModel();
         }

@@ -4,30 +4,30 @@ import { createContext, useState } from 'react';
 const FavoritesContext = createContext({
     favorites: [],
     totalFavorites: 0,
-    addFavorite: (favoriteCompany: any) => {},
-    removeFavorite: (companyId: any) => {},
-    itemIsFavorite: (companyId: any) => {}
+    addFavorite: (favoriteCurrencies: any) => {},
+    removeFavorite: (currencyId: any) => {},
+    itemIsFavorite: (currencyId: any) => {}
 });
 
 export function FavoritesContextProvider(props: { children: React.ReactNode; }) {
     const [userFavorites, setUserFavorites] = useState([]);
 
-    function addFavoriteHandler(favoriteCompany: ConcatArray<never>) {
+    function addFavoriteHandler(favoriteCurrency: ConcatArray<never>) {
         setUserFavorites((prevUserFavorites) => {
-            return prevUserFavorites.concat(favoriteCompany);
+            return prevUserFavorites.concat(favoriteCurrency);
         });
     }
 
-    function removeFavoriteHandler(companyId: any) {
+    function removeFavoriteHandler(currencyId: any) {
         setUserFavorites(prevUserFavorites => {
             // @ts-ignore
-            return prevUserFavorites.filter(company => company.id !== companyId);
+            return prevUserFavorites.filter(currency => currency.id !== currencyId);
         });
     }
 
-    function itemIsFavoriteHandler(companyId: any) {
+    function itemIsFavoriteHandler(currencyId: any) {
         // @ts-ignore
-        return userFavorites.some(company => company.id === companyId);
+        return userFavorites.some(currency => currency.id === currencyId);
     }
 
     const context = {

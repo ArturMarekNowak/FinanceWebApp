@@ -9,8 +9,7 @@ namespace WebApp.Helpers
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor &&
-                (descriptor.ControllerName.Equals("Currencies") || descriptor.ControllerName.Equals("Prices")) 
+            if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor
                 && descriptor.ActionName.StartsWith("GetAll"))
             {
                 Dictionary<string, string> parameters = new()
@@ -30,7 +29,6 @@ namespace WebApp.Helpers
                         Description = pair.Value,
                         In = new ParameterLocation()
                     });
-                
             }
         }
     }

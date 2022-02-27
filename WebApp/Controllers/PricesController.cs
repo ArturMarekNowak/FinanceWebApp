@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using WebApp.Helpers;
 using WebApp.Models;
@@ -22,11 +23,12 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        ///     This method retrieves all companies prices
+        ///     This method retrieves all currencies prices
         /// </summary>
         /// <returns>List of CompanyPrice objects</returns>
         /// <response code="200">CompanyPrice list returned successfully</response>
         [HttpGet]
+        [ODataAttributeRouting]
         [EnableQuery(PageSize = 100)]
         [ProducesResponseType(200)]
         public ActionResult<IQueryable<Price>> GetAllPrices(string symbol)
