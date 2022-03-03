@@ -1,22 +1,22 @@
 ﻿import * as React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useState, useEffect } from "react";
+import {useParams} from "react-router";
 
 function DetailsPage() {
     
     const [ isCurrencyLoading, setIsCurrencyLoading ] = useState(true);
     const [ loadedCurrency, setLoadedCurrency ] = useState([]);
-
+    let { id } = useParams();
+    
     useEffect(() => {
         setIsCurrencyLoading(true);
-        fetch('http://localhost:8080/api/Prices?symbol=BINANCE:BTCUSDT')
+        fetch(`http://localhost:8080/api/Prices?symbol=${id}`)
             .then(response => {
                 return response.json();
             })
             .then(data => {
                 const currencyPrices = [];
-
-                console.log(data);
                 
                 for (const key in data["value"]) {
                     const currencyPrice = {
@@ -33,7 +33,7 @@ function DetailsPage() {
                 
                 console.log(loadedCurrency);
             });
-    }, []);
+    }, [id]);
     
     const options: any = {
         chart: {

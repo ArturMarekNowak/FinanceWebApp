@@ -20,7 +20,7 @@ function CurrencyItem(props: { id: any; DisplaySymbol: React.ReactNode; Symbol: 
                     <div className={classes.actions}>
                         &nbsp;
                         <button>
-                            <Link to={'/details'}>
+                            <Link to={`/details/${props.Symbol}`}>
                                 {'Details'}
                             </Link>
                         </button>
