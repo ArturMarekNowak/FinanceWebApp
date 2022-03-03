@@ -12,7 +12,7 @@ function App() {
          <Switch>
              <Route path={'/currencies'} component={AllCurrenciesPage} />
              <Route path={'/favourites'} component={FavouritesPage} />
-             <Route path={'/details'} component={DetailsPage} />
+             <Route path={`/details/:id`} component={DetailsPage} />
          </Switch>
      </Layout>  
    );
